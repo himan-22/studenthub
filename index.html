@@ -1,0 +1,4388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0d12" />
+  <title>StudentHub | NE India's Student Economy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #111318;
+      --ink-soft: #4e5664;
+      --muted: #7b8290;
+      --line: #e5e0d5;
+      --line-dark: rgba(255, 255, 255, 0.12);
+      --paper: #fbfaf6;
+      --panel: #ffffff;
+      --night: #0b0d12;
+      --night-2: #141821;
+      --gold: #bd9851;
+      --gold-2: #d7b46b;
+      --champagne: #f6e6bd;
+      --green: #2e8b78;
+      --wine: #8a4f66;
+      --moss: #5e7d48;
+      --blue: #496f9a;
+      --shadow: 0 20px 60px rgba(22, 19, 12, 0.10);
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 18px;
+      --nav-h: 70px;
+      --bottom-h: 70px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    svg {
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .app-shell {
+      min-height: 100dvh;
+      padding-bottom: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 max(24px, calc((100vw - 1180px) / 2));
+      background: rgba(11, 13, 18, 0.94);
+      border-bottom: 1px solid rgba(215, 180, 107, 0.18);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 1px;
+      color: #fff;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--gold-2);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link {
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 13px;
+      font-weight: 600;
+      transition: 160ms ease;
+    }
+
+    .nav-link:hover {
+      color: rgba(255, 255, 255, 0.88);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-link.active {
+      color: var(--gold-2);
+      background: rgba(215, 180, 107, 0.10);
+      border-color: rgba(215, 180, 107, 0.24);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.06);
+      transition: 160ms ease;
+    }
+
+    .icon-button:hover {
+      color: #fff;
+      border-color: rgba(215, 180, 107, 0.36);
+    }
+
+    .account-button {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: none;
+      place-items: center;
+      border: 1px solid rgba(215, 180, 107, 0.42);
+      border-radius: 999px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
+        linear-gradient(135deg, #d7b46b, #7d5c24);
+      color: #fff7df;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      box-shadow: 0 10px 28px rgba(189, 152, 81, 0.24);
+      overflow: hidden;
+      animation: avatarIn 420ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .account-button.show {
+      display: inline-grid;
+    }
+
+    .account-button::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.34), transparent 65%);
+      transform: translateX(-70%) rotate(18deg);
+      animation: avatarSheen 3.8s ease-in-out infinite;
+    }
+
+    .account-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes avatarIn {
+      from {
+        opacity: 0;
+        transform: scale(0.82) translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes avatarSheen {
+      0%, 58% {
+        transform: translateX(-78%) rotate(18deg);
+      }
+      76%, 100% {
+        transform: translateX(78%) rotate(18deg);
+      }
+    }
+
+    .mobile-head,
+    .bottom-nav {
+      display: none;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: pageIn 280ms ease both;
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(189, 152, 81, 0.20), transparent 34%),
+        linear-gradient(180deg, var(--night), var(--night-2));
+      color: #fff;
+      border-bottom: 1px solid rgba(189, 152, 81, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(246, 230, 189, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(246, 230, 189, 0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 88%);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: calc(100dvh - var(--nav-h) - 86px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 72px 24px 58px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--gold-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+
+    .hero-title {
+      max-width: 760px;
+      margin: 0 0 20px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(48px, 7.4vw, 90px);
+      line-height: 0.98;
+      letter-spacing: -1.4px;
+      animation: luxuryRise 700ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .hero-title em {
+      color: var(--gold-2);
+      font-style: italic;
+    }
+
+    .hero-copy {
+      max-width: 570px;
+      margin: 0 auto 34px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 17px;
+      line-height: 1.75;
+      animation: luxuryRise 780ms 80ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      animation: luxuryRise 820ms 140ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes luxuryRise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 20px;
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      font-weight: 700;
+      transition: 160ms ease;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn::after,
+    .submit-button::after,
+    .market-add-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+      transform: translateX(-120%);
+      transition: transform 520ms ease;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .btn:hover::after,
+    .submit-button:hover::after,
+    .market-add-card:hover::after {
+      transform: translateX(120%);
+    }
+
+    .btn.primary {
+      background: var(--gold-2);
+      color: #161109;
+    }
+
+    .btn.primary:hover {
+      background: #e5c57a;
+      transform: translateY(-1px);
+    }
+
+    .btn.ghost {
+      color: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn.ghost:hover {
+      color: #fff;
+      border-color: rgba(215, 180, 107, 0.38);
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+
+    .section.compact {
+      padding-top: 36px;
+      padding-bottom: 36px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      margin: 0 0 7px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .section-copy {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .category-card {
+      min-height: 236px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+      box-shadow: 0 10px 30px rgba(22, 19, 12, 0.045);
+      transition: 180ms ease;
+      text-align: left;
+    }
+
+    .category-card:hover {
+      border-color: rgba(189, 152, 81, 0.42);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .category-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #f4efe5;
+      color: #7e6330;
+    }
+
+    .category-card.fitness .category-icon {
+      background: #f6eef2;
+      color: var(--wine);
+    }
+
+    .category-card.merch .category-icon {
+      background: #eef4e9;
+      color: var(--moss);
+    }
+
+    .category-title {
+      display: block;
+      margin: 20px 0 8px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 24px;
+      line-height: 1.12;
+    }
+
+    .category-desc {
+      display: block;
+      margin: 0 0 18px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .category-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid rgba(189, 152, 81, 0.24);
+      border-radius: 999px;
+      background: rgba(189, 152, 81, 0.08);
+      color: #7a5a22;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .step {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--panel);
+    }
+
+    .step-number {
+      margin-bottom: 16px;
+      color: #cfc7b8;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .market-layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 20px);
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+    }
+
+    .sidebar-title {
+      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .filter-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .filter-button {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink-soft);
+      background: #fcfbf8;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      transition: 160ms ease;
+    }
+
+    .filter-button.active,
+    .filter-button:hover {
+      color: var(--ink);
+      border-color: rgba(189, 152, 81, 0.38);
+      background: rgba(189, 152, 81, 0.08);
+    }
+
+    .market-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .search-field {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: min(420px, 100%);
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--muted);
+    }
+
+    .search-field input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 14px;
+    }
+
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .listing-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 268px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--panel);
+      transition: 180ms ease;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(189, 152, 81, 0.42);
+      box-shadow: 0 14px 36px rgba(22, 19, 12, 0.08);
+    }
+
+    .listing-media {
+      height: 94px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #f8f3e8, #fbfaf6);
+    }
+
+    .listing-card.fitness .listing-media {
+      background: linear-gradient(135deg, #f8eef3, #fbfaf6);
+    }
+
+    .listing-card.merch .listing-media {
+      background: linear-gradient(135deg, #eff6ea, #fbfaf6);
+    }
+
+    .listing-symbol {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #7e6330;
+      border: 1px solid rgba(126, 99, 48, 0.16);
+    }
+
+    .listing-card.fitness .listing-symbol {
+      color: var(--wine);
+      border-color: rgba(138, 79, 102, 0.18);
+    }
+
+    .listing-card.merch .listing-symbol {
+      color: var(--moss);
+      border-color: rgba(94, 125, 72, 0.18);
+    }
+
+    .rating {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: rgba(17, 19, 24, 0.08);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .listing-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 17px;
+    }
+
+    .listing-category {
+      margin-bottom: 7px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .listing-name {
+      margin: 0 0 7px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .listing-provider,
+    .listing-meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .listing-meta {
+      margin-top: 4px;
+    }
+
+    .listing-action {
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border-radius: 9px;
+      background: var(--night);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      transition: 160ms ease;
+    }
+
+    .listing-action:hover {
+      background: #1a1f2a;
+    }
+
+    .add-card {
+      border: 1px dashed rgba(189, 152, 81, 0.48);
+      background: rgba(189, 152, 81, 0.07);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 22px;
+    }
+
+    .add-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      border-radius: 14px;
+      background: var(--panel);
+      color: var(--gold);
+      border: 1px solid rgba(189, 152, 81, 0.24);
+    }
+
+    .market-categories {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .market-category {
+      min-width: 0;
+    }
+
+    .market-category-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .market-category-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(126, 99, 48, 0.20);
+      border-radius: 14px;
+      background: #f4efe5;
+      color: #7e6330;
+    }
+
+    .market-category.fitness .market-category-icon {
+      border-color: rgba(138, 79, 102, 0.20);
+      background: #f6eef2;
+      color: var(--wine);
+    }
+
+    .market-category.merch .market-category-icon {
+      border-color: rgba(94, 125, 72, 0.20);
+      background: #eef4e9;
+      color: var(--moss);
+    }
+
+    .market-category-title {
+      margin: 0 0 3px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .market-category-sub {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .market-add-card {
+      min-height: 248px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 28px 18px;
+      border: 1px solid rgba(126, 99, 48, 0.20);
+      border-radius: var(--r-md);
+      background: linear-gradient(135deg, rgba(126, 99, 48, 0.08), rgba(126, 99, 48, 0.035));
+      color: #7e6330;
+      text-align: center;
+      transition: 180ms ease;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .market-add-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(126, 99, 48, 0.12);
+    }
+
+    .market-category.fitness .market-add-card {
+      border-color: rgba(138, 79, 102, 0.20);
+      background: linear-gradient(135deg, rgba(138, 79, 102, 0.08), rgba(138, 79, 102, 0.035));
+      color: var(--wine);
+    }
+
+    .market-category.merch .market-add-card {
+      border-color: rgba(94, 125, 72, 0.20);
+      background: linear-gradient(135deg, rgba(94, 125, 72, 0.08), rgba(94, 125, 72, 0.035));
+      color: var(--moss);
+    }
+
+    .market-add-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border: 2px solid currentColor;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      opacity: 0.88;
+    }
+
+    .market-add-title {
+      margin-bottom: 7px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .market-add-copy {
+      max-width: 190px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .market-add-button {
+      min-height: 36px;
+      padding: 0 15px;
+      border-radius: 8px;
+      background: currentColor;
+    }
+
+    .market-add-button span {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) 0.92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .form-panel,
+    .info-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+      box-shadow: 0 10px 30px rgba(22, 19, 12, 0.045);
+    }
+
+    .form-panel {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(215, 180, 107, 0.86), transparent);
+    }
+
+    .role-toggle {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f5f0e6;
+    }
+
+    .role-option {
+      position: relative;
+      min-height: 54px;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: var(--ink-soft);
+      text-align: left;
+      transition: 180ms ease;
+      overflow: hidden;
+    }
+
+    .role-option.active {
+      color: var(--ink);
+      background: var(--panel);
+      box-shadow: 0 12px 28px rgba(22, 19, 12, 0.08);
+    }
+
+    .role-option strong {
+      font-size: 13px;
+    }
+
+    .role-option span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .role-option.active::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .input,
+    .select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: 0;
+      background: #fcfbf8;
+      color: var(--ink);
+      padding: 11px 12px;
+      font-size: 14px;
+      transition: 160ms ease;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .input:focus,
+    .select:focus,
+    textarea:focus {
+      border-color: rgba(189, 152, 81, 0.72);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(189, 152, 81, 0.12);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+    }
+
+    .conditional {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 18px;
+      border: 1px solid rgba(189, 152, 81, 0.22);
+      border-radius: 12px;
+      background: rgba(189, 152, 81, 0.06);
+    }
+
+    .conditional.show {
+      display: block;
+    }
+
+    .conditional .form-grid {
+      margin-top: 0;
+    }
+
+    .conditional-title {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .other-detail {
+      display: none;
+    }
+
+    .other-detail.show {
+      display: grid;
+    }
+
+    .role-panel {
+      display: none;
+      grid-column: 1 / -1;
+    }
+
+    .role-panel.show {
+      display: block;
+      animation: panelIn 320ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .experience-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 130px;
+      gap: 8px;
+    }
+
+    @keyframes panelIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .submit-row {
+      margin-top: 18px;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 50px;
+      border-radius: 10px;
+      background: var(--night);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      transition: 160ms ease;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .submit-button:hover {
+      background: #1a1f2a;
+    }
+
+    .info-panel {
+      overflow: hidden;
+      background: var(--night);
+      color: #fff;
+    }
+
+    .info-panel-head {
+      padding: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .info-panel-head h3 {
+      margin: 0 0 8px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .info-panel-head p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .benefits {
+      display: grid;
+      gap: 0;
+    }
+
+    .benefit {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 13px;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .benefit:last-child {
+      border-bottom: 0;
+    }
+
+    .benefit-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--gold-2);
+      background: rgba(215, 180, 107, 0.10);
+      border: 1px solid rgba(215, 180, 107, 0.22);
+    }
+
+    .benefit strong {
+      display: block;
+      margin-bottom: 4px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 14px;
+    }
+
+    .benefit span {
+      color: rgba(255, 255, 255, 0.54);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .account-popover {
+      position: fixed;
+      top: calc(var(--nav-h) + 12px);
+      right: max(18px, calc((100vw - 1180px) / 2));
+      z-index: 76;
+      display: none;
+      width: min(320px, calc(100vw - 32px));
+      overflow: hidden;
+      border: 1px solid rgba(215, 180, 107, 0.25);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 28px 70px rgba(22, 19, 12, 0.18);
+      backdrop-filter: blur(18px);
+      animation: popoverIn 220ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .account-popover.open {
+      display: block;
+    }
+
+    .account-popover-head {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(215, 180, 107, 0.16), rgba(255, 255, 255, 0));
+    }
+
+    .account-popover-avatar {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7b46b, #7d5c24);
+      color: #fff7df;
+      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(189, 152, 81, 0.24);
+    }
+
+    .account-popover-name {
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .account-popover-role {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .account-popover-body {
+      padding: 14px 18px 18px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .account-popover-menu {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 2px;
+    }
+
+    .account-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 100%;
+      min-height: 40px;
+      padding: 0 10px;
+      border-radius: 9px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      transition: 140ms ease;
+    }
+
+    .account-menu-item:hover {
+      color: var(--ink);
+      background: rgba(22, 19, 12, 0.05);
+    }
+
+    .account-menu-item svg {
+      opacity: 0.6;
+      flex: 0 0 auto;
+    }
+
+    .account-menu-item:hover svg {
+      opacity: 1;
+    }
+
+    .account-menu-item.danger {
+      color: #c04545;
+    }
+
+    .account-menu-item.danger svg {
+      opacity: 0.75;
+    }
+
+    .account-menu-item.danger:hover {
+      color: #a82d2d;
+      background: rgba(192, 69, 69, 0.07);
+    }
+
+    .account-popover-footer {
+      padding: 10px 10px 12px;
+    }
+
+    /* Schedule chips */
+    .schedule-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .schedule-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 13px;
+      border: 1px solid rgba(189, 152, 81, 0.32);
+      border-radius: 999px;
+      background: rgba(189, 152, 81, 0.07);
+      color: #7a5a22;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 140ms ease;
+    }
+
+    .schedule-chip:hover {
+      background: rgba(189, 152, 81, 0.16);
+      border-color: rgba(189, 152, 81, 0.55);
+    }
+
+    .schedule-chip.selected {
+      background: var(--gold-2);
+      border-color: var(--gold-2);
+      color: #1a1000;
+    }
+
+    /* Rate tooltip */
+    .rate-info-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      cursor: default;
+    }
+
+    .rate-info-icon svg {
+      flex: 0 0 auto;
+    }
+
+    .rate-tooltip {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      z-index: 50;
+      width: 230px;
+      padding: 12px 14px;
+      background: var(--night);
+      color: rgba(255,255,255,0.88);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.65;
+      border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.24);
+      border: 1px solid rgba(215, 180, 107, 0.2);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 160ms ease, transform 160ms ease;
+      transform: translateX(-50%) translateY(4px);
+      white-space: normal;
+    }
+
+    .rate-tooltip strong {
+      color: var(--gold-2);
+    }
+
+    .rate-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--night);
+    }
+
+    .rate-info-icon:hover .rate-tooltip,
+    .rate-info-icon:focus .rate-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Profile modal */
+    .profile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 78;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(11, 13, 18, 0.72);
+      backdrop-filter: blur(12px);
+    }
+
+    .profile-overlay.open {
+      display: flex;
+    }
+
+    .profile-dialog {
+      width: min(480px, 100%);
+      max-height: 88dvh;
+      overflow-y: auto;
+      border: 1px solid rgba(215, 180, 107, 0.24);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.28);
+      animation: pageIn 240ms cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .profile-header {
+      position: relative;
+      padding: 28px 24px 20px;
+      background: linear-gradient(135deg, var(--night), var(--night-2));
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+      border-bottom: 1px solid rgba(215, 180, 107, 0.2);
+    }
+
+    .profile-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.7);
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      transition: 140ms ease;
+    }
+
+    .profile-close-btn:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .profile-avatar-lg {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7b46b, #7d5c24);
+      color: #fff7df;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 14px 36px rgba(189, 152, 81, 0.30);
+      border: 2px solid rgba(215, 180, 107, 0.4);
+    }
+
+    .profile-name-display {
+      color: #fff;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+
+    .profile-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(215, 180, 107, 0.15);
+      border: 1px solid rgba(215, 180, 107, 0.3);
+      color: var(--gold-2);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .profile-body {
+      padding: 22px 24px 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .profile-field-row {
+      display: grid;
+      gap: 4px;
+    }
+
+    .profile-field-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .profile-field-value {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .profile-edit-input {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: 0;
+      background: #fcfbf8;
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: 160ms ease;
+    }
+
+    .profile-edit-input:focus {
+      border-color: rgba(189, 152, 81, 0.72);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(189, 152, 81, 0.12);
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 10px;
+      padding: 0 24px 24px;
+    }
+
+    .profile-btn {
+      flex: 1;
+      min-height: 44px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: 160ms ease;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .profile-btn.save {
+      background: var(--night);
+      color: #fff;
+    }
+
+    .profile-btn.save:hover {
+      background: #1a1f2a;
+    }
+
+    .profile-btn.cancel {
+      background: #f0ece2;
+      color: var(--ink-soft);
+    }
+
+    .profile-btn.cancel:hover {
+      background: #e5e0d4;
+      color: var(--ink);
+    }
+
+    /* Logout confirm */
+    .logout-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 79;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(11, 13, 18, 0.68);
+      backdrop-filter: blur(12px);
+    }
+
+    .logout-overlay.open {
+      display: flex;
+    }
+
+    .logout-dialog {
+      width: min(360px, 100%);
+      border: 1px solid rgba(192, 69, 69, 0.22);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.24);
+      overflow: hidden;
+      animation: pageIn 200ms cubic-bezier(.22,1,.36,1) both;
+      text-align: center;
+      padding: 32px 28px 24px;
+    }
+
+    .logout-icon {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 16px;
+      border-radius: 16px;
+      background: rgba(192, 69, 69, 0.1);
+      color: #c04545;
+      border: 1px solid rgba(192, 69, 69, 0.18);
+    }
+
+    .logout-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+
+    .logout-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+
+    .logout-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .logout-btn {
+      flex: 1;
+      min-height: 44px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 0;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .logout-btn.confirm {
+      background: #c04545;
+      color: #fff;
+    }
+
+    .logout-btn.confirm:hover {
+      background: #a82d2d;
+    }
+
+    .logout-btn.back {
+      background: #f0ece2;
+      color: var(--ink-soft);
+    }
+
+    .logout-btn.back:hover {
+      background: #e5e0d4;
+      color: var(--ink);
+    }
+
+    @keyframes popoverIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .commission {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+      border-collapse: collapse;
+    }
+
+    .commission th,
+    .commission td {
+      padding: 15px 18px;
+      border-bottom: 1px solid #efebe2;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .commission th {
+      background: var(--night);
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 11px;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+    }
+
+    .commission th:first-child,
+    .commission td.keep {
+      color: var(--gold-2);
+    }
+
+    .commission td {
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .commission tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 80;
+      display: none;
+      max-width: calc(100vw - 32px);
+      transform: translateX(-50%);
+      padding: 12px 18px;
+      border: 1px solid rgba(215, 180, 107, 0.26);
+      border-radius: 999px;
+      background: var(--night);
+      color: #fff;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      padding: 24px;
+      background: rgba(11, 13, 18, 0.94);
+      backdrop-filter: blur(18px);
+    }
+
+    .search-overlay.open {
+      display: block;
+    }
+
+    .requirement-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 75;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(11, 13, 18, 0.68);
+      backdrop-filter: blur(12px);
+    }
+
+    .requirement-overlay.open {
+      display: flex;
+    }
+
+    .requirement-dialog {
+      width: min(560px, 100%);
+      overflow: hidden;
+      border: 1px solid rgba(215, 180, 107, 0.24);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
+    }
+
+    .requirement-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .requirement-kicker {
+      margin-bottom: 5px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .requirement-title {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 27px;
+      line-height: 1.12;
+    }
+
+    .requirement-close {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #fcfbf8;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .requirement-body {
+      padding: 20px 22px 22px;
+    }
+
+    .requirement-copy {
+      margin: 0 0 14px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .requirement-list {
+      display: grid;
+      gap: 9px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .requirement-list li {
+      display: flex;
+      gap: 10px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .requirement-list li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .requirement-action {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 10px;
+      background: var(--night);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .search-dialog {
+      max-width: 680px;
+      margin: 7vh auto 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--r-lg);
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .search-dialog-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .search-dialog-head input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      font-size: 16px;
+    }
+
+    .search-cancel {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .search-results {
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+
+    .result-item {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      padding: 14px 16px;
+      border-bottom: 1px solid #efebe2;
+      text-align: left;
+    }
+
+    .result-item:hover {
+      background: #fcfbf8;
+    }
+
+    .result-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #f4efe5;
+      color: var(--gold);
+    }
+
+    .result-name {
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .result-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 46px 20px;
+      border: 1px dashed var(--line);
+      border-radius: var(--r-md);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.55);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .form-layout,
+      .market-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        min-height: auto;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .listing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .market-categories {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .about-stats-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .topbar {
+        display: none;
+      }
+
+      .mobile-head {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        background: rgba(11, 13, 18, 0.96);
+        border-bottom: 1px solid rgba(215, 180, 107, 0.18);
+        backdrop-filter: blur(16px);
+      }
+
+      .mobile-head-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 45;
+        height: calc(var(--bottom-h) + var(--safe-b));
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding-bottom: var(--safe-b);
+        border-top: 1px solid rgba(215, 180, 107, 0.18);
+        background: rgba(11, 13, 18, 0.97);
+      }
+
+      .bottom-button {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 4px;
+        color: rgba(255, 255, 255, 0.42);
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .bottom-button.active {
+        color: var(--gold-2);
+      }
+
+      .app-shell {
+        padding-bottom: calc(var(--bottom-h) + var(--safe-b));
+      }
+
+      .hero-inner {
+        padding: 54px 18px 38px;
+        gap: 34px;
+      }
+
+      .hero-title {
+        font-size: clamp(44px, 15vw, 64px);
+      }
+
+      .category-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 42px 18px;
+      }
+
+      .section-head,
+      .market-tools {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .role-toggle {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-row {
+        grid-template-columns: 1fr;
+      }
+
+      .account-popover {
+        top: 76px;
+        right: 16px;
+      }
+
+      .listing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .commission-wrap {
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .toast {
+        bottom: calc(var(--bottom-h) + var(--safe-b) + 16px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+    <div class="search-dialog" role="dialog" aria-label="Search services">
+      <div class="search-dialog-head">
+        <svg width="18" height="18" fill="none" stroke="#7b8290" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="globalSearch" type="search" placeholder="Search tutoring, fitness, merchandise..." autocomplete="off" />
+        <button class="search-cancel" type="button" data-close-search>Cancel</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <header class="mobile-head">
+    <button class="brand" type="button" data-page="home">Student<span>Hub</span></button>
+    <div class="mobile-head-actions">
+      <button class="icon-button" type="button" data-open-search aria-label="Search services">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="account-button" type="button" data-account-button aria-label="Account"><span data-account-initials>SH</span></button>
+    </div>
+  </header>
+
+  <nav class="topbar" aria-label="Primary">
+    <button class="brand" type="button" data-page="home">Student<span>Hub</span></button>
+    <div class="nav-actions">
+      <button class="nav-link active" type="button" data-page="home">Home</button>
+      <button class="nav-link" type="button" data-page="marketplace">Marketplace</button>
+      <button class="nav-link" type="button" data-page="store">Store</button>
+      <button class="nav-link" type="button" data-page="register" id="navJoinBtn">Join</button>
+      <button class="nav-link" type="button" data-page="howto">About</button>
+      <button class="icon-button" type="button" data-open-search aria-label="Search services">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="account-button" type="button" data-account-button aria-label="Account"><span data-account-initials>SH</span></button>
+    </div>
+  </nav>
+
+  <main class="app-shell">
+    <section class="page active" id="home">
+      <div class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Northeast India's student economy</div>
+            <h1 class="hero-title">Earn while you <em>learn.</em></h1>
+            <p class="hero-copy">StudentHub connects students who teach, coach, and sell with learners looking for trusted campus talent.</p>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" data-page="marketplace">
+                Browse services
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+              <button class="btn ghost" type="button" data-page="register">
+                Join free
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Built for students on both sides</h2>
+            <p class="section-copy">Providers get a credible place to list skills. Learners get a focused way to find academic, fitness, and merchandise support.</p>
+          </div>
+          <button class="text-link" type="button" data-page="marketplace">See marketplace <span aria-hidden="true">-></span></button>
+        </div>
+
+        <div class="category-grid">
+          <button class="category-card" type="button" data-page="marketplace" data-filter="tutoring">
+            <span class="category-icon" data-icon="book"></span>
+            <span>
+              <span class="category-title">Peer tutoring</span>
+              <span class="category-desc">Offer exam preparation, class support, and subject mentoring to juniors or local learners.</span>
+            </span>
+            <span class="category-meta"><span class="tag">Session based</span><span class="tag">Repeatable</span></span>
+          </button>
+
+          <button class="category-card fitness" type="button" data-page="marketplace" data-filter="fitness">
+            <span class="category-icon" data-icon="fitness"></span>
+            <span>
+              <span class="category-title">Fitness coaching</span>
+              <span class="category-desc">Run yoga, dance fitness, mobility, or strength sessions for campus and local groups.</span>
+            </span>
+            <span class="category-meta"><span class="tag">Low cost</span><span class="tag">Group friendly</span></span>
+          </button>
+
+          <button class="category-card merch" type="button" data-page="store">
+            <span class="category-icon" data-icon="shirt"></span>
+            <span>
+              <span class="category-title">College merchandise</span>
+              <span class="category-desc">Customize your own t-shirt or browse batch hoodies, mugs, and mementos from student sellers.</span>
+            </span>
+            <span class="category-meta"><span class="tag">Custom T-shirts</span><span class="tag">Pre-order</span></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">How it works</h2>
+            <p class="section-copy">From profile to first booking in four practical steps.</p>
+          </div>
+          <button class="text-link" type="button" data-page="howto">Full guide <span aria-hidden="true">-></span></button>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-number">01</div><h3>Register</h3><p>Create a provider or learner profile with your college and WhatsApp details.</p></article>
+          <article class="step"><div class="step-number">02</div><h3>Match</h3><p>Providers list services. Learners share goals, schedule, and preferred mode.</p></article>
+          <article class="step"><div class="step-number">03</div><h3>Confirm</h3><p>Agree on time, expectations, payment, and final details through WhatsApp.</p></article>
+          <article class="step"><div class="step-number">04</div><h3>Grow</h3><p>Earn, learn, build trust, and improve your profile over time.</p></article>
+        </div>
+      </section>
+    </section>
+
+    <section class="page" id="marketplace">
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h1 class="section-title">Marketplace</h1>
+            <p class="section-copy">Browse student-led services or add your own profile to the platform.</p>
+          </div>
+          <button class="btn primary" type="button" id="addYourServiceBtn" onclick="handleAddService()">Add your service</button>
+        </div>
+
+        <div class="market-categories">
+          <div class="market-category">
+            <div class="market-category-head">
+              <div class="market-category-icon" data-icon="book"></div>
+              <div>
+                <h2 class="market-category-title">Tutoring</h2>
+                <div class="market-category-sub">Learn from peer experts</div>
+              </div>
+            </div>
+            <button class="market-add-card" type="button" data-page="register">
+              <span class="market-add-icon" data-icon="plus"></span>
+              <span class="market-add-title">Add Yours</span>
+              <span class="market-add-copy">List your tutoring service</span>
+              <span class="market-add-button"><span>Add Course</span></span>
+            </button>
+          </div>
+
+          <div class="market-category fitness">
+            <div class="market-category-head">
+              <div class="market-category-icon" data-icon="fitness"></div>
+              <div>
+                <h2 class="market-category-title">Fitness</h2>
+                <div class="market-category-sub">Coaching and wellness</div>
+              </div>
+            </div>
+            <button class="market-add-card" type="button" data-page="register">
+              <span class="market-add-icon" data-icon="plus"></span>
+              <span class="market-add-title">Add Yours</span>
+              <span class="market-add-copy">List your fitness service</span>
+              <span class="market-add-button"><span>Add Session</span></span>
+            </button>
+          </div>
+
+          <div class="market-category merch">
+            <div class="market-category-head">
+              <div class="market-category-icon" data-icon="shirt"></div>
+              <div>
+                <h2 class="market-category-title">Merchandise</h2>
+                <div class="market-category-sub">Custom tees and campus products</div>
+              </div>
+            </div>
+            <button class="market-add-card" type="button" data-page="store" style="min-height:248px">
+              <span class="market-add-icon" data-icon="shirt"></span>
+              <span class="market-add-title">Visit the Store</span>
+              <span class="market-add-copy">Customize your own t-shirt or browse student-run merchandise listings.</span>
+              <span class="market-add-button"><span>Go to Store →</span></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="market-tools">
+          <div class="search-field">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input id="marketSearch" type="search" placeholder="Search tutors, fitness…" autocomplete="off" />
+          </div>
+          <span style="color:var(--muted);font-size:13px;font-weight:600" id="activeFilterLabel">All services</span>
+        </div>
+        <div class="market-layout">
+          <aside class="sidebar">
+            <div class="sidebar-title">Filter</div>
+            <div class="filter-list">
+              <button class="filter-button active" type="button" data-filter-button="all">All services <span id="count-all"></span></button>
+              <button class="filter-button" type="button" data-filter-button="tutoring">Tutoring <span id="count-tutoring"></span></button>
+              <button class="filter-button" type="button" data-filter-button="fitness">Fitness <span id="count-fitness"></span></button>
+            </div>
+          </aside>
+          <div class="listing-grid" id="listingGrid"></div>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="store">
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h1 class="section-title">Merchandise Store</h1>
+            <p class="section-copy">Design your own t-shirt or explore student-run products — hoodies, mugs, batch tees, and more.</p>
+          </div>
+          <button class="btn primary" type="button" onclick="openSellModal()">Sell on StudentHub</button>
+        </div>
+
+        <!-- T-SHIRT CUSTOMIZER -->
+        
+            <!-- Preview panel -->
+            
+            <!-- Controls panel -->
+            
+              
+          <style>
+            @media(max-width:680px){
+              #tshirtCustomizer{grid-template-columns:1fr!important}
+              #tshirtCustomizer>div:first-child{border-right:none!important;border-bottom:1px solid var(--line)}
+            }
+          </style>
+        </div>
+
+        <!-- MERCH LISTINGS -->
+        <div class="section-head" style="margin-bottom:18px">
+          <div>
+            <h2 class="section-title" style="font-size:clamp(22px,3vw,30px)">Student-run Merchandise</h2>
+            <p class="section-copy">Pre-order from student sellers. All listings are from registered StudentHub providers.</p>
+          </div>
+        </div>
+        <div class="market-layout">
+          <aside class="sidebar">
+            <div class="sidebar-title">Filter</div>
+            <div class="filter-list">
+              <button class="filter-button active" type="button" data-store-filter="all">All products</button>
+              <button class="filter-button" type="button" data-store-filter="hoodies">Hoodies</button>
+              <button class="filter-button" type="button" data-store-filter="tees">T-Shirts</button>
+              <button class="filter-button" type="button" data-store-filter="mugs">Mugs & Mementos</button>
+              <button class="filter-button" type="button" data-store-filter="stickers">Stickers & Stationery</button>
+            </div>
+          </aside>
+          <div>
+            <div class="listing-grid" id="storeListings"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="page" id="register">
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h1 class="section-title">Join StudentHub</h1>
+            <p class="section-copy">Sign in to your account, or create a new one to start learning or providing services.</p>
+          </div>
+        </div>
+
+        <!-- LOGIN PANEL -->
+        <div class="form-layout" id="loginPanel">
+          <div class="form-panel" style="max-width:480px">
+            <h2 style="margin:0 0 6px;font-family:'Playfair Display',Georgia,serif;font-size:26px">Welcome back</h2>
+            <p style="margin:0 0 22px;color:var(--muted);font-size:14px">Sign in to access your StudentHub account.</p>
+            <div style="display:grid;gap:14px">
+              <div class="field">
+                <label for="login-username">Username or Email id</label>
+                <input class="input" id="login-username" type="text" placeholder="yourname or +91 98765 43210" autocomplete="username" />
+              </div>
+              <div class="field">
+                <label for="login-password">Password</label>
+                <input class="input" id="login-password" type="password" placeholder="Enter your password" autocomplete="current-password" />
+              </div>
+              <button class="submit-button" type="button" onclick="handleLogin()" style="margin-top:6px">Sign in</button>
+              <div style="text-align:center;padding-top:6px;color:var(--ink-soft);font-size:14px">
+                Don't have an account?
+                <button type="button" onclick="showSignup()" style="color:var(--gold);font-weight:800;font-size:14px;background:none;border:none;cursor:pointer;padding:0 4px;text-decoration:underline">Sign up</button>
+              </div>
+            </div>
+          </div>
+          <aside class="info-panel">
+            <div class="info-panel-head">
+              <h3>Why join?</h3>
+              <p>Designed for learners and student providers who want trust, clarity, and a premium first impression.</p>
+            </div>
+            <div class="benefits">
+              <div class="benefit"><span class="benefit-icon" data-icon="search"></span><div><strong>Better discovery</strong><span>Providers get found. Learners describe exactly what they need.</span></div></div>
+              <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>WhatsApp first</strong><span>Conversations stay direct, fast, and easy to coordinate.</span></div></div>
+              <div class="benefit"><span class="benefit-icon" data-icon="wallet"></span><div><strong>Clear terms</strong><span>Rates, schedules, delivery timelines, and requirements are captured upfront.</span></div></div>
+              <div class="benefit"><span class="benefit-icon" data-icon="star"></span><div><strong>Premium profile</strong><span>The account avatar appears after signup and stores your profile locally.</span></div></div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- SIGNUP PANEL (hidden by default) -->
+        <div id="signupPanel" style="display:none">
+          <!-- Role chooser -->
+          <div id="roleChooserPanel">
+            <div style="max-width:600px;margin:0 auto;text-align:center;padding:18px 0 28px">
+              <button type="button" onclick="showLoginPanel()" style="color:var(--gold);font-size:13px;font-weight:800;background:none;border:none;cursor:pointer;margin-bottom:16px;display:inline-flex;align-items:center;gap:6px">
+                ← Back to sign in
+              </button>
+              <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,4vw,36px);margin:0 0 10px">How would you like to join?</h2>
+              <p style="color:var(--muted);font-size:15px;margin:0 0 28px;line-height:1.6">StudentHub is built for both sides — learn from your peers, or share your own knowledge and skills.</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;text-align:left">
+                <button type="button" onclick="startSignup('learner')" style="padding:26px 22px;border:2px solid var(--line);border-radius:var(--r-lg);background:var(--panel);text-align:left;cursor:pointer;transition:180ms ease" onmouseover="this.style.borderColor='rgba(189,152,81,0.5)'" onmouseout="this.style.borderColor='var(--line)'">
+                  <div style="width:46px;height:46px;border-radius:14px;background:#f4efe5;display:grid;place-items:center;color:#7e6330;margin-bottom:14px" data-icon="book"></div>
+                  <div style="font-family:'Playfair Display',Georgia,serif;font-size:20px;margin-bottom:7px">I want to learn</div>
+                  <div style="color:var(--muted);font-size:13px;line-height:1.55">Find peer tutors, fitness coaches, or browse student merchandise.</div>
+                  <div style="margin-top:14px;color:var(--gold);font-size:13px;font-weight:800">Join as Learner →</div>
+                </button>
+                <button type="button" onclick="startSignup('provider')" style="padding:26px 22px;border:2px solid var(--line);border-radius:var(--r-lg);background:var(--panel);text-align:left;cursor:pointer;transition:180ms ease" onmouseover="this.style.borderColor='rgba(189,152,81,0.5)'" onmouseout="this.style.borderColor='var(--line)'">
+                  <div style="width:46px;height:46px;border-radius:14px;background:#eef4e9;display:grid;place-items:center;color:var(--moss);margin-bottom:14px" data-icon="star"></div>
+                  <div style="font-family:'Playfair Display',Georgia,serif;font-size:20px;margin-bottom:7px">I want to provide</div>
+                  <div style="color:var(--muted);font-size:13px;line-height:1.55">Share your knowledge by offering tutoring, fitness sessions, or merchandise.</div>
+                  <div style="margin-top:14px;color:var(--gold);font-size:13px;font-weight:800">Join as Provider →</div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actual signup form (shown after role is chosen) -->
+          <div id="signupFormPanel" style="display:none">
+            <div class="form-layout">
+              <form class="form-panel" id="registrationForm">
+                <button type="button" onclick="backToRoleChooser()" style="color:var(--gold);font-size:13px;font-weight:800;background:none;border:none;cursor:pointer;margin-bottom:18px;display:inline-flex;align-items:center;gap:6px">
+                  ← Change role
+                </button>
+                <div class="form-grid">
+                  <div class="role-toggle" aria-label="Choose account type" style="display:none" id="roleToggleHidden">
+                    <button class="role-option active" type="button" data-role-option="provider">
+                      <strong>Teacher / Provider</strong>
+                      <span>List tutoring, fitness, or merchandise services.</span>
+                    </button>
+                    <button class="role-option" type="button" data-role-option="learner">
+                      <strong>Learner</strong>
+                      <span>Tell us what you want to learn or buy.</span>
+                    </button>
+                  </div>
+                  <div class="field full" id="selectedRoleBadge" style="background:rgba(189,152,81,0.09);border:1px solid rgba(189,152,81,0.28);border-radius:10px;padding:12px 16px;color:var(--ink);font-size:14px;font-weight:700"></div>
+
+                  <div class="field">
+                    <label for="reg-name">Full name</label>
+                    <input class="input" id="reg-name" type="text" placeholder="Priyanka Borah" autocomplete="name" required />
+                  </div>
+                  <div class="field">
+                    <label for="reg-college">College or university</label>
+                    <input class="input" id="reg-college" type="text" placeholder="XYZ College" autocomplete="organization" />
+                  </div>
+                  <div class="field">
+                    <label for="reg-phone">WhatsApp number</label>
+                    <input class="input" id="reg-phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required />
+                  </div>
+                  <div class="field">
+                    <label for="reg-password">Create a new password</label>
+                    <input class="input" id="reg-password" type="password" placeholder="Choose a strong password" autocomplete="new-password" required />
+                  </div>
+                  <div class="field">
+                    <label for="reg-confirm-password">Confirm password</label>
+                    <input class="input" id="reg-confirm-password" type="password" placeholder="Re-enter your password" autocomplete="new-password" required />
+                  </div>
+
+                  <div class="role-panel show" id="providerFields">
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-category">Service category</label>
+                        <select class="select" id="reg-category">
+                          <option value="">Select category</option>
+                          <option value="Tutoring">Tutoring</option>
+                          <option value="Fitness">Fitness</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label for="reg-rate" style="display:flex;align-items:center;gap:6px;">
+                          Rate or service details
+                          <span class="rate-info-icon" tabindex="0" aria-label="Rate info">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            <span class="rate-tooltip">Enter your pricing or a short description.<br><br><strong>Examples:</strong><br>&#x2022; &#x20B9;200/session, first class free<br>&#x2022; &#x20B9;500/month for group batches<br>&#x2022; Contact on WhatsApp for pricing<br>&#x2022; &#x20B9;150/hr, flexible for students</span>
+                          </span>
+                        </label>
+                        <input class="input" id="reg-rate" type="text" placeholder="e.g. &#x20B9;200/session or Contact for details" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="conditional" id="tutoringFields">
+                    <div class="conditional-title">Tutoring profile details</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-education">Qualification</label>
+                        <select class="select" id="reg-education">
+                          <option value="">Select qualification</option>
+                          <option>Bachelor's Degree</option>
+                          <option>Master's Degree</option>
+                          <option>PhD</option>
+                          <option>Pursuing Degree</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-education">
+                        <label for="reg-education-other">Other qualification details</label>
+                        <input class="input" id="reg-education-other" type="text" placeholder="Describe your qualification" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-language">Teaching language</label>
+                        <select class="select" id="reg-language">
+                          <option value="">Select language</option>
+                          <option>English</option>
+                          <option>Hindi</option>
+                          <option>Assamese</option>
+                          <option>Bengali</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-language">
+                        <label for="reg-language-other">Other language details</label>
+                        <input class="input" id="reg-language-other" type="text" placeholder="Mention the language" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-subjects">Subjects</label>
+                        <input class="input" id="reg-subjects" type="text" placeholder="Physics, Chemistry, Mathematics" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-grades">Classes or exams</label>
+                        <input class="input" id="reg-grades" type="text" placeholder="Class 9-12, JEE, NEET" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-experience">Experience</label>
+                        <div class="experience-row">
+                          <input class="input" id="reg-experience" type="number" min="0" placeholder="2" />
+                          <select class="select" id="reg-experience-unit">
+                            <option>Years</option>
+                            <option>Months</option>
+                            <option>Days</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label for="reg-tech">Technical setup</label>
+                        <select class="select" id="reg-tech">
+                          <option value="">Select setup</option>
+                          <option>Laptop/Desktop with stable internet</option>
+                          <option>Smartphone only</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-tech">
+                        <label for="reg-tech-other">Other setup details</label>
+                        <input class="input" id="reg-tech-other" type="text" placeholder="Describe your setup" />
+                      </div>
+                      <div class="field full">
+                        <label for="reg-availability">Availability</label>
+                        <textarea id="reg-availability" placeholder="Monday-Friday: 6-9 PM, Saturday: 10 AM-2 PM"></textarea>
+                      </div>
+                      <label class="checkbox-row field full" for="reg-demo">
+                        <input type="checkbox" id="reg-demo" />
+                        Available for a demo class
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="conditional" id="fitnessFields">
+                    <div class="conditional-title">Fitness profile details</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-fitness-type">Coaching type</label>
+                        <select class="select" id="reg-fitness-type">
+                          <option value="">Select coaching type</option>
+                          <option>Yoga</option>
+                          <option>Zumba / Dance Fitness</option>
+                          <option>Strength Training</option>
+                          <option>Weight Loss Coaching</option>
+                          <option>Mobility / Flexibility</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-fitness-type">
+                        <label for="reg-fitness-type-other">Other coaching details</label>
+                        <input class="input" id="reg-fitness-type-other" type="text" placeholder="Describe the coaching type" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-fitness-cert">Certification level</label>
+                        <select class="select" id="reg-fitness-cert">
+                          <option value="">Select certification</option>
+                          <option>Certified trainer</option>
+                          <option>College sports team / department experience</option>
+                          <option>Self-trained with portfolio</option>
+                          <option>Currently pursuing certification</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-fitness-cert">
+                        <label for="reg-fitness-cert-other">Other certification details</label>
+                        <input class="input" id="reg-fitness-cert-other" type="text" placeholder="Mention your experience or proof" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-fitness-mode">Session mode</label>
+                        <select class="select" id="reg-fitness-mode">
+                          <option value="">Select mode</option>
+                          <option>Online</option>
+                          <option>On-campus</option>
+                          <option>Home / local outdoor sessions</option>
+                          <option>Hybrid</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-fitness-mode">
+                        <label for="reg-fitness-mode-other">Other mode details</label>
+                        <input class="input" id="reg-fitness-mode-other" type="text" placeholder="Describe how sessions will run" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-fitness-capacity">Batch size</label>
+                        <input class="input" id="reg-fitness-capacity" type="text" placeholder="1-on-1, 5-10 students, etc." />
+                      </div>
+                      <div class="field">
+                        <label for="reg-fitness-equipment">Equipment needed</label>
+                        <input class="input" id="reg-fitness-equipment" type="text" placeholder="Yoga mat, dumbbells, none, etc." />
+                      </div>
+                      <div class="field full">
+                        <label for="reg-fitness-availability">Availability</label>
+                        <textarea id="reg-fitness-availability" placeholder="Morning batches, weekends, evening slots, etc."></textarea>
+                      </div>
+                      <label class="checkbox-row field full" for="reg-fitness-safety">
+                        <input type="checkbox" id="reg-fitness-safety" />
+                        I can guide beginners safely and avoid medical/diet claims beyond my expertise
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="conditional" id="merchFields">
+                    <div class="conditional-title">Merchandise profile details</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="reg-merch-type">Product type</label>
+                        <select class="select" id="reg-merch-type">
+                          <option value="">Select product type</option>
+                          <option>Hoodies / Sweatshirts</option>
+                          <option>T-shirts</option>
+                          <option>Mugs / Mementos</option>
+                          <option>Stickers / Stationery</option>
+                          <option>Combo packs</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-merch-type">
+                        <label for="reg-merch-type-other">Other product details</label>
+                        <input class="input" id="reg-merch-type-other" type="text" placeholder="Describe your product" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-merch-method">Production method</label>
+                        <select class="select" id="reg-merch-method">
+                          <option value="">Select method</option>
+                          <option>Print-on-demand</option>
+                          <option>Local vendor partnership</option>
+                          <option>Pre-order batch production</option>
+                          <option>Ready stock</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="reg-merch-method">
+                        <label for="reg-merch-method-other">Other production details</label>
+                        <input class="input" id="reg-merch-method-other" type="text" placeholder="Explain your production method" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-merch-min-order">Minimum order</label>
+                        <input class="input" id="reg-merch-min-order" type="text" placeholder="e.g. 20 pieces or no minimum" />
+                      </div>
+                      <div class="field">
+                        <label for="reg-merch-delivery">Delivery timeline</label>
+                        <input class="input" id="reg-merch-delivery" type="text" placeholder="e.g. 7-10 days after payment" />
+                      </div>
+                      <div class="field full">
+                        <label for="reg-merch-notes">Design and payment details</label>
+                        <textarea id="reg-merch-notes" placeholder="Mention design support, advance payment, sample policy, delivery area, etc."></textarea>
+                      </div>
+                      <label class="checkbox-row field full" for="reg-merch-permission">
+                        <input type="checkbox" id="reg-merch-permission" />
+                        I will use college names/logos only with proper permission
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="role-panel" id="learnerFields">
+                    <div class="conditional-title">Learner profile details</div>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="learn-email">Email address</label>
+                        <input class="input" id="learn-email" type="email" placeholder="you@example.com" autocomplete="email" />
+                      </div>
+                      <div class="field">
+                        <label for="learn-category">I want to learn / explore</label>
+                        <select class="select" id="learn-category" onchange="toggleLearnerOther(this)">
+                          <option value="">Select a category</option>
+                          <option>Mathematics</option>
+                          <option>Science</option>
+                          <option>Programming</option>
+                          <option>Yoga / Fitness</option>
+                          <option>Languages</option>
+                          <option>Music</option>
+                          <option>Arts &amp; Crafts</option>
+                          <option value="Other">Other / I want to provide</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="learn-category">
+                        <label for="learn-category-other">Specify your interest</label>
+                        <input class="input" id="learn-category-other" type="text" placeholder="Describe what you want to learn or offer" />
+                      </div>
+
+                      <!-- Shown only when Other is selected -->
+                      <div id="learnerProviderFields" style="display:none;grid-column:1/-1">
+                        <div style="background:rgba(189,152,81,0.09);border:1px solid rgba(189,152,81,0.28);border-radius:10px;padding:12px 16px;color:var(--ink);font-size:14px;font-weight:700;margin-bottom:16px">
+                          📋 Since you selected Other, please fill in your provider details below so we can match you with the right opportunity.
+                        </div>
+                        <div class="form-grid">
+                          <div class="field">
+                            <label for="learn-prov-category">Service category</label>
+                            <select class="select" id="learn-prov-category" onchange="setLearnerProviderCategoryFields(this.value); showRequirements(this.value)">
+                              <option value="">Select category</option>
+                              <option value="Tutoring">Tutoring</option>
+                              <option value="Fitness">Fitness</option>
+                              <option value="Merchandise">Merchandise</option>
+                            </select>
+                          </div>
+                          <div class="field">
+                            <label for="learn-prov-rate">Rate or service details</label>
+                            <input class="input" id="learn-prov-rate" type="text" placeholder="e.g. ₹200/session or Contact for details" />
+                          </div>
+                        </div>
+
+                        <!-- Tutoring sub-fields for learner-other -->
+                        <div class="conditional" id="learnerTutoringFields">
+                          <div class="conditional-title">Tutoring profile details</div>
+                          <div class="form-grid">
+                            <div class="field">
+                              <label for="lo-education">Qualification</label>
+                              <select class="select" id="lo-education" onchange="toggleOtherDetail(this)">
+                                <option value="">Select qualification</option>
+                                <option>Bachelor's Degree</option>
+                                <option>Master's Degree</option>
+                                <option>PhD</option>
+                                <option>Pursuing Degree</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-education">
+                              <label for="lo-education-other">Other qualification details</label>
+                              <input class="input" id="lo-education-other" type="text" placeholder="Describe your qualification" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-language">Teaching language</label>
+                              <select class="select" id="lo-language" onchange="toggleOtherDetail(this)">
+                                <option value="">Select language</option>
+                                <option>English</option>
+                                <option>Hindi</option>
+                                <option>Assamese</option>
+                                <option>Bengali</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-language">
+                              <label for="lo-language-other">Other language details</label>
+                              <input class="input" id="lo-language-other" type="text" placeholder="Mention the language" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-subjects">Subjects</label>
+                              <input class="input" id="lo-subjects" type="text" placeholder="Physics, Chemistry, Mathematics" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-grades">Classes or exams</label>
+                              <input class="input" id="lo-grades" type="text" placeholder="Class 9-12, JEE, NEET" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-experience">Experience</label>
+                              <div class="experience-row">
+                                <input class="input" id="lo-experience" type="number" min="0" placeholder="2" />
+                                <select class="select" id="lo-experience-unit">
+                                  <option>Years</option>
+                                  <option>Months</option>
+                                  <option>Days</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="field">
+                              <label for="lo-tech">Technical setup</label>
+                              <select class="select" id="lo-tech" onchange="toggleOtherDetail(this)">
+                                <option value="">Select setup</option>
+                                <option>Laptop/Desktop with stable internet</option>
+                                <option>Smartphone only</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-tech">
+                              <label for="lo-tech-other">Other setup details</label>
+                              <input class="input" id="lo-tech-other" type="text" placeholder="Describe your setup" />
+                            </div>
+                            <div class="field full">
+                              <label for="lo-availability">Availability</label>
+                              <textarea id="lo-availability" placeholder="Monday-Friday: 6-9 PM, Saturday: 10 AM-2 PM"></textarea>
+                            </div>
+                            <label class="checkbox-row field full" for="lo-demo">
+                              <input type="checkbox" id="lo-demo" />
+                              Available for a demo class
+                            </label>
+                          </div>
+                        </div>
+
+                        <!-- Fitness sub-fields for learner-other -->
+                        <div class="conditional" id="learnerFitnessFields">
+                          <div class="conditional-title">Fitness profile details</div>
+                          <div class="form-grid">
+                            <div class="field">
+                              <label for="lo-fitness-type">Coaching type</label>
+                              <select class="select" id="lo-fitness-type" onchange="toggleOtherDetail(this)">
+                                <option value="">Select coaching type</option>
+                                <option>Yoga</option>
+                                <option>Zumba / Dance Fitness</option>
+                                <option>Strength Training</option>
+                                <option>Weight Loss Coaching</option>
+                                <option>Mobility / Flexibility</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-fitness-type">
+                              <label for="lo-fitness-type-other">Other coaching details</label>
+                              <input class="input" id="lo-fitness-type-other" type="text" placeholder="Describe the coaching type" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-fitness-cert">Certification level</label>
+                              <select class="select" id="lo-fitness-cert" onchange="toggleOtherDetail(this)">
+                                <option value="">Select certification</option>
+                                <option>Certified trainer</option>
+                                <option>College sports team / department experience</option>
+                                <option>Self-trained with portfolio</option>
+                                <option>Currently pursuing certification</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-fitness-cert">
+                              <label for="lo-fitness-cert-other">Other certification details</label>
+                              <input class="input" id="lo-fitness-cert-other" type="text" placeholder="Mention your experience or proof" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-fitness-mode">Session mode</label>
+                              <select class="select" id="lo-fitness-mode" onchange="toggleOtherDetail(this)">
+                                <option value="">Select mode</option>
+                                <option>Online</option>
+                                <option>On-campus</option>
+                                <option>Home / local outdoor sessions</option>
+                                <option>Hybrid</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-fitness-mode">
+                              <label for="lo-fitness-mode-other">Other mode details</label>
+                              <input class="input" id="lo-fitness-mode-other" type="text" placeholder="Describe how sessions will run" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-fitness-capacity">Batch size</label>
+                              <input class="input" id="lo-fitness-capacity" type="text" placeholder="1-on-1, 5-10 students, etc." />
+                            </div>
+                            <div class="field">
+                              <label for="lo-fitness-equipment">Equipment needed</label>
+                              <input class="input" id="lo-fitness-equipment" type="text" placeholder="Yoga mat, dumbbells, none, etc." />
+                            </div>
+                            <div class="field full">
+                              <label for="lo-fitness-availability">Availability</label>
+                              <textarea id="lo-fitness-availability" placeholder="Morning batches, weekends, evening slots, etc."></textarea>
+                            </div>
+                            <label class="checkbox-row field full" for="lo-fitness-safety">
+                              <input type="checkbox" id="lo-fitness-safety" />
+                              I can guide beginners safely and avoid medical/diet claims beyond my expertise
+                            </label>
+                          </div>
+                        </div>
+
+                        <!-- Merchandise sub-fields for learner-other -->
+                        <div class="conditional" id="learnerMerchFields">
+                          <div class="conditional-title">Merchandise profile details</div>
+                          <div class="form-grid">
+                            <div class="field">
+                              <label for="lo-merch-type">Product type</label>
+                              <select class="select" id="lo-merch-type" onchange="toggleOtherDetail(this)">
+                                <option value="">Select product type</option>
+                                <option>Hoodies / Sweatshirts</option>
+                                <option>T-shirts</option>
+                                <option>Mugs / Mementos</option>
+                                <option>Stickers / Stationery</option>
+                                <option>Combo packs</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-merch-type">
+                              <label for="lo-merch-type-other">Other product details</label>
+                              <input class="input" id="lo-merch-type-other" type="text" placeholder="Describe your product" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-merch-method">Production method</label>
+                              <select class="select" id="lo-merch-method" onchange="toggleOtherDetail(this)">
+                                <option value="">Select method</option>
+                                <option>Print-on-demand</option>
+                                <option>Local vendor partnership</option>
+                                <option>Pre-order batch production</option>
+                                <option>Ready stock</option>
+                                <option>Other</option>
+                              </select>
+                            </div>
+                            <div class="field other-detail" data-other-for="lo-merch-method">
+                              <label for="lo-merch-method-other">Other production details</label>
+                              <input class="input" id="lo-merch-method-other" type="text" placeholder="Explain your production method" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-merch-min-order">Minimum order</label>
+                              <input class="input" id="lo-merch-min-order" type="text" placeholder="e.g. 20 pieces or no minimum" />
+                            </div>
+                            <div class="field">
+                              <label for="lo-merch-delivery">Delivery timeline</label>
+                              <input class="input" id="lo-merch-delivery" type="text" placeholder="e.g. 7-10 days after payment" />
+                            </div>
+                            <div class="field full">
+                              <label for="lo-merch-notes">Design and payment details</label>
+                              <textarea id="lo-merch-notes" placeholder="Mention design support, advance payment, sample policy, delivery area, etc."></textarea>
+                            </div>
+                            <label class="checkbox-row field full" for="lo-merch-permission">
+                              <input type="checkbox" id="lo-merch-permission" />
+                              I will use college names/logos only with proper permission
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label for="learn-mode">Preferred mode</label>
+                        <select class="select" id="learn-mode">
+                          <option value="">Select mode</option>
+                          <option>Online</option>
+                          <option>On-campus</option>
+                          <option>Offline nearby</option>
+                          <option>Hybrid</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div class="field other-detail" data-other-for="learn-mode">
+                        <label for="learn-mode-other">Other mode details</label>
+                        <input class="input" id="learn-mode-other" type="text" placeholder="Describe your preferred mode" />
+                      </div>
+                      <div class="field full">
+                        <label for="learn-schedule">Preferred schedule</label>
+                        <div class="schedule-chips" id="scheduleChips">
+                          <button type="button" class="schedule-chip" data-chip="Weekday mornings">Weekday mornings</button>
+                          <button type="button" class="schedule-chip" data-chip="Weekday evenings">Weekday evenings</button>
+                          <button type="button" class="schedule-chip" data-chip="Weekends">Weekends</button>
+                          <button type="button" class="schedule-chip" data-chip="Saturday only">Saturday only</button>
+                          <button type="button" class="schedule-chip" data-chip="Sunday only">Sunday only</button>
+                          <button type="button" class="schedule-chip" data-chip="Flexible / Anytime">Flexible / Anytime</button>
+                        </div>
+                        <input class="input" id="learn-schedule" type="text" placeholder="Click chips above or type your own schedule..." style="margin-top:8px" />
+                      </div>
+                      <div class="field full">
+                        <label for="learn-goal">Learning goal</label>
+                        <textarea id="learn-goal" placeholder="Tell us your exam, fitness goal, product need, deadline, or any specific expectation."></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="submit-row">
+                  <button class="submit-button" type="submit">Submit and join platform</button>
+                </div>
+              </form>
+
+              <aside class="info-panel">
+                <div class="info-panel-head">
+                  <h3>Why join?</h3>
+                  <p>Designed for learners and student providers who want trust, clarity, and a premium first impression.</p>
+                </div>
+                <div class="benefits">
+                  <div class="benefit"><span class="benefit-icon" data-icon="search"></span><div><strong>Better discovery</strong><span>Providers get found. Learners describe exactly what they need.</span></div></div>
+                  <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>WhatsApp first</strong><span>Conversations stay direct, fast, and easy to coordinate.</span></div></div>
+                  <div class="benefit"><span class="benefit-icon" data-icon="wallet"></span><div><strong>Clear terms</strong><span>Rates, schedules, delivery timelines, and requirements are captured upfront.</span></div></div>
+                  <div class="benefit"><span class="benefit-icon" data-icon="star"></span><div><strong>Premium profile</strong><span>The account avatar appears after signup and stores your profile locally.</span></div></div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </section>
+
+    <section class="page" id="howto">
+
+      <!-- ABOUT SECTION -->
+      <section class="section" style="border-bottom: 1px solid var(--line);">
+        <div style="max-width: 780px;">
+          <div class="eyebrow" style="color: var(--gold); margin-bottom: 16px;">About StudentHub</div>
+          <h1 class="section-title" style="margin-bottom: 20px;">NE India's student economy, <em style="font-style:italic; color: var(--gold);">built by students.</em></h1>
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 18px;">
+            StudentHub is a peer-to-peer platform built specifically for students across Northeast India. We connect students who have skills — in tutoring, fitness coaching, or merchandise — with learners and buyers on their own campuses and beyond.
+          </p>
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 18px;">
+            The idea is simple: college students are already teaching, training, and selling. StudentHub gives them a credible, structured place to do it — with clean profiles, transparent pricing, and direct WhatsApp communication that keeps things fast and personal.
+          </p>
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0;">
+            Whether you're a learner looking for affordable, reliable support from someone who actually gets campus life — or a provider ready to turn your skills into consistent income — StudentHub is built for both sides of that conversation.
+          </p>
+        </div>
+
+        <div class="about-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px;">
+          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
+            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">NE India</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Region focused</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Built for the students, colleges, and communities of Northeast India.</div>
+          </div>
+          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
+            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">90%</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Earnings kept</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Providers keep the majority of every session, sale, or order they complete.</div>
+          </div>
+          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
+            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">3 min</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">To get listed</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Fill in your profile once and start receiving interest from learners right away.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h1 class="section-title">How it works</h1>
+            <p class="section-copy">A practical operating model for student providers and learners.</p>
+          </div>
+          <button class="btn primary" type="button" data-page="register" id="howtoCreateProfileBtn">Create profile</button>
+        </div>
+
+        <div class="steps">
+          <article class="step"><div class="step-number">01</div><h3>Choose your role</h3><p>Register as a teacher/provider or as a learner looking for help.</p></article>
+          <article class="step"><div class="step-number">02</div><h3>Add details</h3><p>Providers add service requirements. Learners add goals, schedule, and preferred mode.</p></article>
+          <article class="step"><div class="step-number">03</div><h3>Connect</h3><p>Use WhatsApp to confirm availability, expectations, and next steps directly.</p></article>
+          <article class="step"><div class="step-number">04</div><h3>Continue</h3><p>Learn, earn, reorder, improve, and keep building your campus network.</p></article>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Commission structure</h2>
+            <p class="section-copy">Transparent enough to explain in one message.</p>
+          </div>
+        </div>
+        <div class="commission-wrap">
+          <table class="commission">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Typical earning</th>
+                <th>Platform cut</th>
+                <th>You keep</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Peer tutoring</td><td>Earn per session</td><td>10%</td><td class="keep">90%</td></tr>
+              <tr><td>Fitness coaching</td><td>Earn per session</td><td>10%</td><td class="keep">90%</td></tr>
+              <tr><td>College merchandise</td><td>Earn per item</td><td>Vendor managed</td><td class="keep">Margin kept</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- SELL ON STUDENTHUB MODAL -->
+  <div id="sellOverlay" style="display:none;position:fixed;inset:0;z-index:75;background:rgba(11,13,18,0.72);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
+    <div style="width:min(480px,100%);border:1px solid rgba(215,180,107,0.24);border-radius:18px;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,0.30);overflow:hidden;animation:pageIn 240ms cubic-bezier(.22,1,.36,1) both">
+      <div style="padding:22px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+        <div>
+          <div style="color:var(--gold);font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">Merchandise Store</div>
+          <h2 style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:26px;line-height:1.1">Sell on StudentHub</h2>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.55">Share your contact details and we will connect you with buyers through WhatsApp.</p>
+        </div>
+        <button onclick="closeSellModal()" style="width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:999px;background:#fcfbf8;color:var(--muted);font-size:20px;line-height:1;flex:0 0 auto;cursor:pointer">x</button>
+      </div>
+      <div style="padding:22px 24px;display:grid;gap:14px">
+        <div class="field">
+          <label for="sell-name">Full name</label>
+          <input class="input" id="sell-name" type="text" placeholder="Your name" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="sell-college">College / University</label>
+          <input class="input" id="sell-college" type="text" placeholder="e.g. Jorhat Engineering College" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="sell-phone">WhatsApp number</label>
+          <input class="input" id="sell-phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" />
+        </div>
+        <div class="field">
+          <label for="sell-product">What do you sell?</label>
+          <input class="input" id="sell-product" type="text" placeholder="e.g. Custom hoodies, batch tees, mugs..." />
+        </div>
+        <button onclick="submitSellForm()" style="min-height:48px;border-radius:10px;background:var(--night);color:#fff;font-size:14px;font-weight:800;border:0;cursor:pointer;margin-top:4px">
+          Submit and Connect via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <nav class="bottom-nav" aria-label="Mobile primary">
+    <button class="bottom-button active" type="button" data-page="home"><span data-icon="home"></span><span>Home</span></button>
+    <button class="bottom-button" type="button" data-page="marketplace"><span data-icon="bag"></span><span>Market</span></button>
+    <button class="bottom-button" type="button" data-page="store"><span data-icon="shirt"></span><span>Store</span></button>
+    <button class="bottom-button" type="button" data-page="register" id="bottomJoinBtn"><span data-icon="user"></span><span>Join</span></button>
+    <button class="bottom-button" type="button" data-page="howto"><span data-icon="help"></span><span>Guide</span></button>
+  </nav>
+
+  <div class="requirement-overlay" id="requirementOverlay" aria-hidden="true">
+    <div class="requirement-dialog" role="dialog" aria-modal="true" aria-labelledby="requirementTitle">
+      <div class="requirement-head">
+        <div>
+          <div class="requirement-kicker">Before you register</div>
+          <h2 class="requirement-title" id="requirementTitle">Category requirements</h2>
+        </div>
+        <button class="requirement-close" type="button" data-close-requirements aria-label="Close requirements">x</button>
+      </div>
+      <div class="requirement-body">
+        <p class="requirement-copy" id="requirementCopy"></p>
+        <ul class="requirement-list" id="requirementList"></ul>
+        <button class="requirement-action" type="button" data-close-requirements>I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="account-popover" id="accountPopover" aria-hidden="true">
+    <div class="account-popover-head">
+      <div class="account-popover-avatar" data-account-initials>SH</div>
+      <div>
+        <div class="account-popover-name" id="accountName">StudentHub user</div>
+        <div class="account-popover-role" id="accountRole">Registered account</div>
+      </div>
+    </div>
+    <div class="account-popover-menu">
+      <button class="account-menu-item" type="button" onclick="openProfileModal(); closeAccountPopover();">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        View &amp; Edit Profile
+      </button>
+      <button class="account-menu-item" type="button" onclick="closeAccountPopover(); setPage('marketplace');">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Browse Marketplace
+      </button>
+
+    </div>
+    <div class="account-popover-footer">
+      <button class="account-menu-item danger" type="button" onclick="openLogoutConfirm(); closeAccountPopover();">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log Out
+      </button>
+    </div>
+  </div>
+
+  <!-- PROFILE MODAL -->
+  <div class="profile-overlay" id="profileOverlay" aria-hidden="true">
+    <div class="profile-dialog" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <div class="profile-header">
+        <button class="profile-close-btn" type="button" onclick="closeProfileModal()" aria-label="Close profile">&#x2715;</button>
+        <div class="profile-avatar-lg" id="profileAvatarLg">SH</div>
+        <h2 class="profile-name-display" id="profileTitle">Your Name</h2>
+        <div class="profile-role-badge" id="profileRoleBadge">Member</div>
+      </div>
+      <div class="profile-body" id="profileViewMode">
+        <div class="profile-field-row">
+          <div class="profile-field-label">Full Name</div>
+          <div class="profile-field-value" id="pv-name">&#x2014;</div>
+        </div>
+        <div class="profile-field-row">
+          <div class="profile-field-label">College / University</div>
+          <div class="profile-field-value" id="pv-college">&#x2014;</div>
+        </div>
+        <div class="profile-field-row">
+          <div class="profile-field-label">WhatsApp Number</div>
+          <div class="profile-field-value" id="pv-phone">&#x2014;</div>
+        </div>
+        <div class="profile-field-row">
+          <div class="profile-field-label">Role</div>
+          <div class="profile-field-value" id="pv-role">&#x2014;</div>
+        </div>
+        <div class="profile-field-row">
+          <div class="profile-field-label">Profile Summary</div>
+          <div class="profile-field-value" id="pv-summary" style="color:var(--muted);font-size:13px;line-height:1.55"></div>
+        </div>
+      </div>
+      <div class="profile-body" id="profileEditMode" style="display:none">
+        <div class="profile-field-row">
+          <label class="profile-field-label" for="edit-name">Full Name</label>
+          <input class="profile-edit-input" id="edit-name" type="text" placeholder="Your full name" />
+        </div>
+        <div class="profile-field-row">
+          <label class="profile-field-label" for="edit-college">College / University</label>
+          <input class="profile-edit-input" id="edit-college" type="text" placeholder="Your college" />
+        </div>
+        <div class="profile-field-row">
+          <label class="profile-field-label" for="edit-phone">WhatsApp Number</label>
+          <input class="profile-edit-input" id="edit-phone" type="tel" placeholder="+91 98765 43210" />
+        </div>
+      </div>
+      <div class="profile-actions" id="profileViewActions">
+        <button class="profile-btn save" type="button" onclick="switchToEditMode()">Edit Profile</button>
+      </div>
+      <div class="profile-actions" id="profileEditActions" style="display:none">
+        <button class="profile-btn cancel" type="button" onclick="switchToViewMode()">Cancel</button>
+        <button class="profile-btn save" type="button" onclick="saveProfileEdits()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGOUT CONFIRM MODAL -->
+  <div class="logout-overlay" id="logoutOverlay" aria-hidden="true">
+    <div class="logout-dialog" role="dialog" aria-modal="true">
+      <div class="logout-icon">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+      <h2 class="logout-title">Log out?</h2>
+      <p class="logout-copy">Your profile data will be cleared from this device. You can sign up again anytime.</p>
+      <div class="logout-buttons">
+        <button class="logout-btn back" type="button" onclick="closeLogoutConfirm()">Cancel</button>
+        <button class="logout-btn confirm" type="button" onclick="confirmLogout()">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const icons = {
+      book: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      fitness: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M5 8H4a4 4 0 0 0 0 8h1M2 12h20M8 12v-2a4 4 0 0 1 8 0v8a4 4 0 0 1-8 0v-2"/></svg>',
+      shirt: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H7v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10h3.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>',
+      search: '<svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
+      whatsapp: '<svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 8.8c.2 3.5 3.1 6.3 6.7 6.7"/></svg>',
+      wallet: '<svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 7H5a2 2 0 0 1 0-4h12"/><path d="M20 7v14H5a2 2 0 0 1-2-2V5"/><path d="M16 14h4"/></svg>',
+      star: '<svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1z"/></svg>',
+      home: '<svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>',
+      bag: '<svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+      user: '<svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>',
+      help: '<svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+      plus: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>'
+    };
+
+    const seedListings = [
+      { id: 1, cat: 'tutoring', phone: '919876543210', name: 'JEE Physics Crash Course', by: 'Student Tutor', meta: 'Concept revision and problem solving', rating: '4.9' },
+      { id: 2, cat: 'tutoring', phone: '919876543211', name: 'UPSC Prelims Mentoring', by: 'Senior Mentor', meta: 'Study plan, polity, history, CSAT', rating: '4.8' },
+      { id: 3, cat: 'tutoring', phone: '919876543212', name: 'NEET Biology Prep', by: 'Medical Student', meta: 'NCERT focus and weekly tests', rating: '5.0' },
+      { id: 4, cat: 'tutoring', phone: '919876543213', name: 'APSC GS Paper 1', by: 'APSC Qualified', meta: 'Foundation and current affairs', rating: '4.9' },
+      { id: 5, cat: 'fitness', phone: '919876543218', name: 'Morning Yoga', by: 'Certified Coach', meta: 'Beginner-friendly online batches', rating: '4.9' },
+      { id: 6, cat: 'fitness', phone: '919876543219', name: 'Zumba Fitness Group', by: 'Dance and Fitness', meta: 'Weekend campus sessions', rating: '5.0' },
+      { id: 7, cat: 'fitness', phone: '919876543220', name: 'Strength and Conditioning', by: 'Sports Department Senior', meta: 'No-equipment training plans', rating: '4.7' },
+      { id: 8, cat: 'merch', phone: '919876543222', name: 'Custom College Hoodies', by: 'PrintCampus Store', meta: 'Batch pre-orders open', rating: 'New' },
+      { id: 9, cat: 'merch', phone: '919876543223', name: 'Graduation Mugs', by: 'MemoraBatch Co.', meta: 'Custom names and departments', rating: 'New' },
+      { id: 10, cat: 'merch', phone: '919876543224', name: 'Farewell Batch Tees', by: 'College PrintSquad', meta: 'Bulk design support included', rating: 'New' }
+    ];
+
+    const categoryLabels = {
+      all: 'All services',
+      tutoring: 'Tutoring',
+      fitness: 'Fitness',
+      merch: 'Merchandise'
+    };
+
+    const categoryRequirements = {
+      Tutoring: {
+        title: 'Simple tutoring role requirements',
+        copy: 'A tutoring profile should show that you can teach clearly, stay reachable, and run sessions without basic technical issues.',
+        items: [
+          'Good internet connectivity for online classes and quick WhatsApp responses.',
+          'Strong command of the subjects, classes, or exams you want to teach.',
+          'A quiet study space, notebook or digital writing setup, and working audio.',
+          'Clear weekly availability and willingness to offer a short demo class.',
+          'Basic lesson planning, punctuality, and respectful communication with learners.'
+        ]
+      },
+      Fitness: {
+        title: 'Fitness coaching role requirements',
+        copy: 'A fitness listing needs enough detail for students to understand safety, session style, batch size, and equipment needs.',
+        items: [
+          'Relevant certification, sports experience, or a clear fitness portfolio.',
+          'Ability to guide beginners safely and avoid medical or diet claims beyond your expertise.',
+          'A suitable space or online setup with stable internet, clear video, and audible instructions.',
+          'Clear session type, batch size, warm-up/cool-down plan, and required equipment.',
+          'Emergency awareness, punctuality, and permission for any on-campus or shared-space sessions.'
+        ]
+      },
+      Merchandise: {
+        title: 'Merchandise seller requirements',
+        copy: 'A merchandise listing should make production, pricing, payment, delivery, and permissions clear before orders are accepted.',
+        items: [
+          'Reliable vendor, print-on-demand setup, or documented production method.',
+          'Clear product samples, sizes, colors, minimum order quantity, and delivery timeline.',
+          'Transparent advance payment, refund, and replacement policy for damaged items.',
+          'Permission to use college names, logos, batch names, or copyrighted artwork.',
+          'A simple order-tracking process and WhatsApp availability for customer updates.'
+        ]
+      }
+    };
+
+    // ── API CONFIG ──────────────────────────────────────────────────────────────
+    // Change this to your deployed backend URL in production.
+    // In development it auto-detects the same origin.
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? `http://localhost:3000`
+      : window.location.origin;
+
+    // ── STATE ───────────────────────────────────────────────────────────────────
+    let currentPage   = 'home';
+    let currentFilter = 'all';
+    let currentRole   = 'provider';
+    // In-memory session state (replaces localStorage)
+    let _sessionToken   = sessionStorage.getItem('sh_token') || null;
+    let _sessionAccount = (() => { try { return JSON.parse(sessionStorage.getItem('sh_account') || 'null'); } catch { return null; } })();
+    let _cachedListings = null; // cache of all DB + seed listings
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    function hydrateIcons() {
+      $$('[data-icon]').forEach((node) => {
+        const icon = icons[node.dataset.icon];
+        if (icon) node.innerHTML = icon;
+      });
+    }
+
+    // ── SESSION HELPERS ─────────────────────────────────────────────────────────
+    function storedAccount() { return _sessionAccount; }
+
+    function saveSession(account, token) {
+      _sessionAccount = account;
+      _sessionToken   = token;
+      sessionStorage.setItem('sh_account', JSON.stringify(account));
+      sessionStorage.setItem('sh_token', token);
+    }
+
+    function clearSession() {
+      _sessionAccount = null;
+      _sessionToken   = null;
+      sessionStorage.removeItem('sh_account');
+      sessionStorage.removeItem('sh_token');
+    }
+
+    // Alias for legacy calls throughout the file
+    function saveAccount(account) {
+      if (_sessionToken) saveSession(account, _sessionToken);
+      applyAccount(account);
+    }
+
+    // ── API HELPERS ─────────────────────────────────────────────────────────────
+    async function apiFetch(path, options = {}) {
+      const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+      if (_sessionToken) headers['Authorization'] = `Bearer ${_sessionToken}`;
+      const res = await fetch(API_BASE + path, { ...options, headers });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      return json;
+    }
+
+    // ── LISTINGS (DB + seed fallback) ───────────────────────────────────────────
+    async function fetchListingsFromDB(cat, q) {
+      const params = new URLSearchParams();
+      if (cat && cat !== 'all') params.set('cat', cat);
+      if (q) params.set('q', q);
+      try {
+        const rows = await apiFetch('/api/listings?' + params.toString());
+        return rows;
+      } catch {
+        return []; // Graceful degradation
+      }
+    }
+
+    function allListings() {
+      // Returns seed + cached DB listings synchronously for search overlay
+      return [...seedListings, ...(_cachedListings || [])];
+    }
+
+    function normalize(value) {
+      return String(value || '').toLowerCase().trim();
+    }
+
+    function listingIcon(cat) {
+      if (cat === 'fitness') return icons.fitness;
+      if (cat === 'merch') return icons.shirt;
+      return icons.book;
+    }
+
+    function openWhatsApp(phone, name) {
+      const message = encodeURIComponent(`Hi! I am interested in: ${name}. Is it available?`);
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank', 'noopener');
+    }
+
+    function openAdminWhatsApp(name) {
+      const message = encodeURIComponent(`Hi StudentHub! I just registered: ${name}. Please review my profile.`);
+      window.open(`https://wa.me/918399925904?text=${message}`, '_blank', 'noopener');
+    }
+
+    function initialsFromName(name) {
+      const parts = String(name || 'StudentHub').trim().split(/\s+/).filter(Boolean);
+      if (!parts.length) return 'SH';
+      return parts.slice(0, 2).map((part) => part[0]).join('').toUpperCase();
+    }
+
+    function handleAddService() {
+      if (storedAccount()) {
+        setPage('register', { _force: true });
+        showSignup();
+        startSignup('provider');
+      } else {
+        setPage('register');
+      }
+    }
+
+    function applyAccount(account = storedAccount()) {
+      if (!account) return;
+      const initials = initialsFromName(account.name);
+      $$('[data-account-initials]').forEach((node) => {
+        node.textContent = initials;
+      });
+      $$('[data-account-button]').forEach((button) => {
+        button.classList.add('show');
+        button.setAttribute('title', `${account.name} - ${account.roleLabel || account.role || 'Member'}`);
+      });
+      const nameEl    = $('#accountName');
+      const roleEl    = $('#accountRole');
+      const summaryEl = $('#accountSummary');
+      if (nameEl)    nameEl.textContent    = account.name || '';
+      if (roleEl)    roleEl.textContent    = account.roleLabel || account.role_label || account.role || 'Member';
+      if (summaryEl) summaryEl.textContent = account.summary || '';
+      // Hide Join/Create-profile elements now that a profile exists
+      hideJoinElements();
+    }
+
+    function toggleAccountPopover() {
+      const popover = $('#accountPopover');
+      const shouldOpen = !popover.classList.contains('open');
+      popover.classList.toggle('open', shouldOpen);
+      popover.setAttribute('aria-hidden', String(!shouldOpen));
+    }
+
+    function closeAccountPopover() {
+      $('#accountPopover').classList.remove('open');
+      $('#accountPopover').setAttribute('aria-hidden', 'true');
+    }
+
+    function hideJoinElements() {
+      const howtoBtn = document.getElementById('howtoCreateProfileBtn');
+      if (howtoBtn) howtoBtn.style.display = 'none';
+      const navJoin = document.getElementById('navJoinBtn');
+      if (navJoin) navJoin.style.display = 'none';
+      const bottomJoin = document.getElementById('bottomJoinBtn');
+      if (bottomJoin) bottomJoin.style.display = 'none';
+    }
+
+    function showJoinElements() {
+      const howtoBtn = document.getElementById('howtoCreateProfileBtn');
+      if (howtoBtn) howtoBtn.style.display = '';
+      const navJoin = document.getElementById('navJoinBtn');
+      if (navJoin) navJoin.style.display = '';
+      const bottomJoin = document.getElementById('bottomJoinBtn');
+      if (bottomJoin) bottomJoin.style.display = '';
+    }
+
+    function setPage(page, options = {}) {
+      // Block navigation to register page if profile exists (unless forced)
+      if (page === 'register' && storedAccount() && !options._force) {
+        return;
+      }
+
+      currentPage = page;
+      $$('.page').forEach((node) => node.classList.toggle('active', node.id === page));
+      $$('[data-page]').forEach((node) => {
+        const isActive = node.dataset.page === page;
+        node.classList.toggle('active', isActive);
+      });
+
+      // Re-enforce hidden state after class toggling (loop above can re-show hidden items)
+      if (storedAccount()) hideJoinElements();
+
+      if (options.filter) {
+        setFilter(options.filter);
+      } else if (page === 'marketplace') {
+        renderListings();
+      } else if (page === 'store') {
+        renderStoreListings();
+      } else if (page === 'register') {
+        // Always show login panel first when navigating to Join
+        document.getElementById('loginPanel').style.display = '';
+        document.getElementById('signupPanel').style.display = 'none';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      $$('[data-filter-button]').forEach((node) => {
+        node.classList.toggle('active', node.dataset.filterButton === filter);
+      });
+      const activeFilterLabel = $('#activeFilterLabel');
+      if (activeFilterLabel) activeFilterLabel.textContent = categoryLabels[filter] || 'All services';
+      renderListings();
+    }
+
+    function renderCounts(items) {
+      const all = items || allListings();
+      const counts = {
+        all: all.filter(i => i.cat !== 'merch').length,
+        tutoring: all.filter((item) => item.cat === 'tutoring').length,
+        fitness: all.filter((item) => item.cat === 'fitness').length,
+        merch: all.filter((item) => item.cat === 'merch').length
+      };
+      Object.entries(counts).forEach(([key, value]) => {
+        const node = $(`#count-${key}`);
+        if (node) node.textContent = value;
+      });
+    }
+
+    async function renderListings() {
+      const grid = $('#listingGrid');
+      if (!grid) return;
+
+      // Show skeleton while loading
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Loading listings…</div>';
+
+      const query = normalize($('#marketSearch')?.value);
+      const cat   = currentFilter !== 'all' ? currentFilter : undefined;
+
+      // Fetch from DB (excludes merch from marketplace)
+      let dbItems = await fetchListingsFromDB(cat, query);
+      // Also filter seed listings client-side for instant feel
+      let seedFiltered = seedListings.filter((item) => {
+        if (item.cat === 'merch') return false;
+        const matchesFilter = !cat || item.cat === cat;
+        const searchable = normalize(`${item.name} ${item.by} ${item.meta}`);
+        return matchesFilter && (!query || searchable.includes(query));
+      });
+
+      // Merge: seed first, then DB (avoid duplicate ids)
+      const dbIds = new Set(dbItems.map(i => String(i.id)));
+      const items = [...seedFiltered.filter(s => !dbIds.has(String(s.id))), ...dbItems]
+        .filter(i => i.cat !== 'merch');
+
+      // Cache for search overlay
+      _cachedListings = dbItems;
+
+      renderCounts([...seedListings, ...dbItems]);
+
+      const cards = items.map((item) => `
+        <article class="listing-card ${item.cat}">
+          <div class="listing-media">
+            <span class="listing-symbol">${listingIcon(item.cat)}</span>
+            <span class="rating">${item.rating || 'New'}</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-category">${categoryLabels[item.cat] || 'Service'}</div>
+            <h3 class="listing-name">${escapeHtml(item.name)}</h3>
+            <div class="listing-provider">${escapeHtml(item.by)}</div>
+            <div class="listing-meta">${escapeHtml(item.meta)}</div>
+            <button class="listing-action" type="button" data-contact="${item.id}">Contact now</button>
+          </div>
+        </article>
+      `).join('');
+
+      const addCard = `
+        <button class="listing-card add-card" type="button" onclick="handleAddService()">
+          <span class="add-icon">${icons.plus}</span>
+          <strong>Add your service</strong>
+          <span class="listing-meta">Create a listing in under 3 minutes.</span>
+        </button>
+      `;
+
+      grid.innerHTML = items.length ? cards + addCard : `<div class="empty-state">No matching services yet. Try another search or add the first listing.</div>${addCard}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      })[char]);
+    }
+
+    function openSearch() {
+      $('#searchOverlay').classList.add('open');
+      $('#searchOverlay').setAttribute('aria-hidden', 'false');
+      $('#globalSearch').value = '';
+      renderSearchResults('');
+      setTimeout(() => $('#globalSearch').focus(), 40);
+    }
+
+    function closeSearch() {
+      $('#searchOverlay').classList.remove('open');
+      $('#searchOverlay').setAttribute('aria-hidden', 'true');
+    }
+
+    function renderSearchResults(query) {
+      const normalized = normalize(query);
+      const results = allListings().filter((item) => {
+        const searchable = normalize(`${item.name} ${item.by} ${item.meta} ${item.cat}`);
+        return !normalized || searchable.includes(normalized);
+      }).slice(0, 8);
+
+      $('#searchResults').innerHTML = results.length
+        ? results.map((item) => `
+          <button class="result-item" type="button" data-result-filter="${item.cat}">
+            <span class="result-icon">${listingIcon(item.cat)}</span>
+            <span>
+              <span class="result-name">${escapeHtml(item.name)}</span>
+              <span class="result-meta">${escapeHtml(item.by)} - ${categoryLabels[item.cat]}</span>
+            </span>
+          </button>
+        `).join('')
+        : '<div class="empty-state">No matching services found.</div>';
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      const toast = $('#toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      toastTimer = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3200);
+    }
+
+    function showRequirements(category) {
+      const details = categoryRequirements[category];
+      if (!details) return;
+      $('#requirementTitle').textContent = details.title;
+      $('#requirementCopy').textContent = details.copy;
+      $('#requirementList').innerHTML = details.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+      $('#requirementOverlay').classList.add('open');
+      $('#requirementOverlay').setAttribute('aria-hidden', 'false');
+    }
+
+    function closeRequirements() {
+      $('#requirementOverlay').classList.remove('open');
+      $('#requirementOverlay').setAttribute('aria-hidden', 'true');
+    }
+
+    function setCategoryFields(category) {
+      const panels = {
+        Tutoring: '#tutoringFields',
+        Fitness: '#fitnessFields'
+      };
+      Object.values(panels).forEach((selector) => $(selector).classList.remove('show'));
+      if (panels[category]) $(panels[category]).classList.add('show');
+    }
+
+    function setRole(role) {
+      currentRole = role;
+      $$('[data-role-option]').forEach((button) => {
+        button.classList.toggle('active', button.dataset.roleOption === role);
+      });
+
+      $('#providerFields').classList.toggle('show', role === 'provider');
+      $('#learnerFields').classList.toggle('show', role === 'learner');
+      $('.submit-button').textContent = role === 'learner' ? 'Create learner account' : 'Submit and join platform';
+
+      if (role === 'learner') {
+        setCategoryFields('');
+      } else {
+        setCategoryFields($('#reg-category').value);
+      }
+    }
+
+    function toggleOtherDetail(select) {
+      const field = $(`[data-other-for="${select.id}"]`);
+      if (!field) return;
+      const shouldShow = select.value === 'Other';
+      field.classList.toggle('show', shouldShow);
+      const input = $('input, textarea', field);
+      if (input && !shouldShow) input.value = '';
+    }
+
+    function validateRequiredFields(required) {
+      for (const [id, message] of required) {
+        const node = $('#' + id);
+        if (!node || !node.value.trim()) {
+          showToast(message);
+          node?.focus();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function validateOtherDetails(selectIds) {
+      for (const id of selectIds) {
+        const select = $('#' + id);
+        if (select?.value === 'Other') {
+          const field = $(`[data-other-for="${id}"]`);
+          const input = field ? $('input, textarea', field) : null;
+          if (!input?.value.trim()) {
+            showToast('Please enter the details for your Other selection.');
+            input?.focus();
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function validateTutoringFields() {
+      return validateRequiredFields([
+        ['reg-education', 'Please select your qualification.'],
+        ['reg-language', 'Please select your teaching language.'],
+        ['reg-subjects', 'Please enter the subjects you can teach.'],
+        ['reg-grades', 'Please enter classes or exams you teach.'],
+        ['reg-tech', 'Please select your technical setup.'],
+        ['reg-availability', 'Please enter your availability.']
+      ]) && validateOtherDetails(['reg-education', 'reg-language', 'reg-tech']);
+    }
+
+    function validateFitnessFields() {
+      if (!validateRequiredFields([
+        ['reg-fitness-type', 'Please select your coaching type.'],
+        ['reg-fitness-cert', 'Please select your certification or experience level.'],
+        ['reg-fitness-mode', 'Please select your session mode.'],
+        ['reg-fitness-capacity', 'Please enter your batch size.'],
+        ['reg-fitness-equipment', 'Please mention equipment needed.'],
+        ['reg-fitness-availability', 'Please enter your fitness session availability.']
+      ])) return false;
+      if (!$('#reg-fitness-safety').checked) {
+        showToast('Please confirm the fitness safety statement.');
+        $('#reg-fitness-safety').focus();
+        return false;
+      }
+      return validateOtherDetails(['reg-fitness-type', 'reg-fitness-cert', 'reg-fitness-mode']);
+    }
+
+    function validateMerchFields() {
+      if (!validateRequiredFields([
+        ['reg-merch-type', 'Please select your product type.'],
+        ['reg-merch-method', 'Please select your production method.'],
+        ['reg-merch-min-order', 'Please enter your minimum order.'],
+        ['reg-merch-delivery', 'Please enter your delivery timeline.'],
+        ['reg-merch-notes', 'Please enter design and payment details.']
+      ])) return false;
+      if (!$('#reg-merch-permission').checked) {
+        showToast('Please confirm the merchandise permission statement.');
+        $('#reg-merch-permission').focus();
+        return false;
+      }
+      return validateOtherDetails(['reg-merch-type', 'reg-merch-method']);
+    }
+
+    function validateLearnerFields() {
+      if (!$('#learn-category').value) { showToast('Please select what you want to learn or explore.'); $('#learn-category').focus(); return false; }
+      return validateRequiredFields([
+        ['learn-mode', 'Please select your preferred mode.'],
+        ['learn-schedule', 'Please enter your preferred schedule.'],
+        ['learn-goal', 'Please enter your learning goal.']
+      ]) && validateOtherDetails(['learn-mode']);
+    }
+
+    function validateCategoryFields(category) {
+      if (category === 'Tutoring') return validateTutoringFields();
+      if (category === 'Fitness') return validateFitnessFields();
+      if (category === 'Merchandise') return validateMerchFields();
+      return true;
+    }
+
+    async function submitRegistration(event) {
+      event.preventDefault();
+      const name     = $('#reg-name').value.trim();
+      const college  = $('#reg-college').value.trim() || 'StudentHub member';
+      const category = $('#reg-category').value;
+      const phone    = $('#reg-phone').value.trim();
+      const details  = $('#reg-rate').value.trim();
+      const password = $('#reg-password').value;
+      const confirmPassword = $('#reg-confirm-password').value;
+
+      if (!name) return showToast('Please enter your full name.');
+      if (!phone) return showToast('Please enter your WhatsApp number.');
+      if (!password) return showToast('Please create a password.');
+      if (password.length < 6) return showToast('Password must be at least 6 characters.');
+      if (password !== confirmPassword) return showToast('Passwords do not match. Please try again.');
+
+      const submitBtn = event.currentTarget.querySelector('.submit-button');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving…'; }
+
+      const cleanPhone = phone.replace(/[^\d]/g, '');
+
+      try {
+        if (currentRole === 'learner') {
+          if (!validateLearnerFields()) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
+
+          const learnCatVal = $('#learn-category').value;
+          const isLearnerOther = learnCatVal === 'Other';
+
+          if (isLearnerOther) {
+            const provCat = $('#learn-prov-category').value;
+            if (!provCat) { showToast('Please select a service category for your provider listing.'); if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
+            if (!validateLearnerCategoryFields(provCat)) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
+
+            const provRate = $('#learn-prov-rate').value.trim();
+            const loExperience = $('#lo-experience').value ? `${$('#lo-experience').value} ${$('#lo-experience-unit').value}` : '';
+            const catMap = { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' };
+            const cat = catMap[provCat] || 'tutoring';
+
+            const roleLabel = `${provCat} provider`;
+            const summary = `${provCat} profile - ${provRate || (loExperience ? loExperience + ' experience' : 'New provider')}.`;
+
+            // 1. Create user account
+            const { user: acc, token } = await apiFetch('/api/auth/signup', {
+              method: 'POST',
+              body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'provider', roleLabel, summary })
+            });
+            saveSession(acc, token);
+
+            // 2. Create listing
+            const listingName = provCat === 'Tutoring' ? `${$('#lo-subjects').value.trim() || provCat} Tutoring` : provCat;
+            await apiFetch('/api/listings', {
+              method: 'POST',
+              body: JSON.stringify({ cat, name: listingName, by: `${name} - ${college}`, meta: provRate || (loExperience ? `${loExperience} experience` : 'New provider'), phone: cleanPhone })
+            });
+
+            event.currentTarget.reset();
+            setRole('learner');
+            document.getElementById('learnerProviderFields').style.display = 'none';
+            $$('#learnerTutoringFields, #learnerFitnessFields, #learnerMerchFields').forEach(el => el.classList.remove('show'));
+            $$('.other-detail').forEach(field => field.classList.remove('show'));
+            renderListings();
+            openAdminWhatsApp(name);
+            showToast(`Welcome, ${name}. Your provider listing has been submitted for review.`);
+            applyAccount(acc);
+            setPage('home');
+            return;
+          }
+
+          // Regular learner
+          const interest = learnCatVal || 'General';
+          const summary = `${interest} learner - ${$('#learn-mode').value}, ${$('#learn-schedule').value}.`;
+          const { user: acc, token } = await apiFetch('/api/auth/signup', {
+            method: 'POST',
+            body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'learner', roleLabel: 'Learner account', summary })
+          });
+          saveSession(acc, token);
+          event.currentTarget.reset();
+          setRole('learner');
+          $$('.other-detail').forEach((field) => field.classList.remove('show'));
+          openAdminWhatsApp(name);
+          showToast(`Welcome, ${name}. Your learner account is ready.`);
+          applyAccount(acc);
+          setPage('home');
+          return;
+        }
+
+        // ── Provider ──
+        if (!category) return showToast('Please select a service category.');
+        if (!validateCategoryFields(category)) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit and join platform'; } return; }
+
+        const roleLabel = `${category} provider`;
+        const summary   = `${category} provider - application pending review.`;
+
+        const { user: acc, token } = await apiFetch('/api/auth/signup', {
+          method: 'POST',
+          body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'provider', roleLabel, summary })
+        });
+        saveSession(acc, token);
+
+        // Create listing (pending approval)
+        await apiFetch('/api/listings', {
+          method: 'POST',
+          body: JSON.stringify({
+            cat: { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' }[category] || 'tutoring',
+            name: details ? `${category} – ${details}` : category,
+            by: `${name} - ${college}`,
+            meta: details || 'Provider application pending review.',
+            phone: cleanPhone
+          })
+        });
+
+        event.currentTarget.reset();
+        setRole('provider');
+        $('#tutoringFields').classList.remove('show');
+        $('#fitnessFields').classList.remove('show');
+        $('#merchFields').classList.remove('show');
+        $$('.other-detail').forEach((field) => field.classList.remove('show'));
+        applyAccount(acc);   // ← create the profile avatar/header NOW
+        openAdminWhatsApp(name);
+        showProviderThankYou(name);
+
+      } catch (err) {
+        showToast(err.message || 'Registration failed. Please try again.');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = currentRole === 'learner' ? 'Create learner account' : 'Submit and join platform'; }
+      }
+    }
+
+    function showProviderThankYou(name) {
+      // Hide the signup form panel and show thank-you
+      document.getElementById('signupFormPanel').style.display = 'none';
+      let thankYouDiv = document.getElementById('providerThankYouPanel');
+      if (!thankYouDiv) {
+        thankYouDiv = document.createElement('div');
+        thankYouDiv.id = 'providerThankYouPanel';
+        thankYouDiv.style.cssText = 'max-width:560px;margin:0 auto;text-align:center;padding:48px 24px';
+        thankYouDiv.innerHTML = `
+          <div style="width:72px;height:72px;border-radius:50%;background:rgba(46,139,120,0.12);border:2px solid rgba(46,139,120,0.38);display:grid;place-items:center;margin:0 auto 24px;color:#2e8b78">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(26px,5vw,38px);margin:0 0 14px;line-height:1.15">Thank you for connecting with us!</h2>
+          <p style="color:var(--muted);font-size:16px;line-height:1.7;margin:0 0 28px">
+            We have received your provider application${name ? ', <strong style="color:var(--ink)">' + name + '</strong>' : ''}.<br>
+            We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via WhatsApp.
+          </p>
+          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(189,152,81,0.10);border:1px solid rgba(189,152,81,0.30);border-radius:12px;padding:14px 20px;margin-bottom:28px;font-size:14px;color:var(--ink)">
+            <svg width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            Keep an eye on your WhatsApp for our team's message.
+          </div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <button type="button" onclick="document.getElementById('providerThankYouPanel').style.display='none';applyAccount(storedAccount());setPage('home');" style="min-height:44px;padding:0 22px;border-radius:9px;background:var(--night);color:#fff;font-size:14px;font-weight:800;border:0;cursor:pointer">
+              Go to Home
+            </button>
+            <button type="button" onclick="document.getElementById('providerThankYouPanel').style.display='none';applyAccount(storedAccount());setPage('marketplace');" style="min-height:44px;padding:0 22px;border-radius:9px;background:transparent;color:var(--gold);font-size:14px;font-weight:800;border:1px solid rgba(189,152,81,0.40);cursor:pointer">
+              Browse Marketplace
+            </button>
+          </div>
+        `;
+        document.getElementById('signupPanel').appendChild(thankYouDiv);
+      } else {
+        thankYouDiv.style.display = '';
+        thankYouDiv.querySelector('p').innerHTML = `We have received your provider application${name ? ', <strong style="color:var(--ink)">' + name + '</strong>' : ''}.<br>We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via WhatsApp.`;
+      }
+    }
+
+    function toggleLearnerOther(select) {
+      const otherField = document.querySelector('[data-other-for="learn-category"]');
+      const providerFields = document.getElementById('learnerProviderFields');
+      const isOther = select.value === 'Other';
+      if (otherField) otherField.classList.toggle('show', isOther);
+      if (providerFields) providerFields.style.display = isOther ? '' : 'none';
+      if (!isOther) {
+        $$('#learnerTutoringFields, #learnerFitnessFields, #learnerMerchFields').forEach(el => el.classList.remove('show'));
+      }
+    }
+
+    function setLearnerProviderCategoryFields(category) {
+      $$('#learnerTutoringFields, #learnerFitnessFields, #learnerMerchFields').forEach(el => el.classList.remove('show'));
+      if (category === 'Tutoring') $('#learnerTutoringFields').classList.add('show');
+      else if (category === 'Fitness') $('#learnerFitnessFields').classList.add('show');
+      else if (category === 'Merchandise') $('#learnerMerchFields').classList.add('show');
+    }
+
+    function validateLearnerCategoryFields(category) {
+      if (category === 'Tutoring') {
+        return validateRequiredFields([
+          ['lo-education', 'Please select your qualification.'],
+          ['lo-language', 'Please select your teaching language.'],
+          ['lo-subjects', 'Please enter the subjects you can teach.'],
+          ['lo-grades', 'Please enter classes or exams you teach.'],
+          ['lo-tech', 'Please select your technical setup.'],
+          ['lo-availability', 'Please enter your availability.']
+        ]) && validateOtherDetails(['lo-education', 'lo-language', 'lo-tech']);
+      }
+      if (category === 'Fitness') {
+        if (!validateRequiredFields([
+          ['lo-fitness-type', 'Please select your coaching type.'],
+          ['lo-fitness-cert', 'Please select your certification level.'],
+          ['lo-fitness-mode', 'Please select your session mode.'],
+          ['lo-fitness-capacity', 'Please enter your batch size.'],
+          ['lo-fitness-equipment', 'Please mention equipment needed.'],
+          ['lo-fitness-availability', 'Please enter your availability.']
+        ])) return false;
+        if (!$('#lo-fitness-safety').checked) { showToast('Please confirm the fitness safety statement.'); return false; }
+        return validateOtherDetails(['lo-fitness-type', 'lo-fitness-cert', 'lo-fitness-mode']);
+      }
+      if (category === 'Merchandise') {
+        if (!validateRequiredFields([
+          ['lo-merch-type', 'Please select your product type.'],
+          ['lo-merch-method', 'Please select your production method.'],
+          ['lo-merch-min-order', 'Please enter your minimum order.'],
+          ['lo-merch-delivery', 'Please enter your delivery timeline.'],
+          ['lo-merch-notes', 'Please enter design and payment details.']
+        ])) return false;
+        if (!$('#lo-merch-permission').checked) { showToast('Please confirm the merchandise permission statement.'); return false; }
+        return validateOtherDetails(['lo-merch-type', 'lo-merch-method']);
+      }
+      return true;
+    }
+
+    document.addEventListener('click', async (event) => {
+      const pageButton = event.target.closest('[data-page]');
+      if (pageButton) {
+        const options = pageButton.dataset.filter ? { filter: pageButton.dataset.filter } : {};
+        setPage(pageButton.dataset.page, options);
+      }
+
+      const filterButton = event.target.closest('[data-filter-button]');
+      if (filterButton) setFilter(filterButton.dataset.filterButton);
+
+      const contactButton = event.target.closest('[data-contact]');
+      if (contactButton) {
+        const listingId = contactButton.dataset.contact;
+        // Try seed listings first (fast path)
+        const seedItem = seedListings.find(l => String(l.id) === listingId);
+        if (seedItem) {
+          openWhatsApp(seedItem.phone, seedItem.name);
+        } else {
+          // DB listing — log contact and get phone
+          try {
+            if (_sessionToken) {
+              const { phone, name } = await apiFetch(`/api/listings/${listingId}/contact`, { method: 'POST' });
+              openWhatsApp(phone, name);
+            } else {
+              // Not logged in — find in cache
+              const cached = (_cachedListings || []).find(l => String(l.id) === listingId);
+              if (cached) openWhatsApp(cached.phone, cached.name);
+              else showToast('Please log in to contact this provider.');
+            }
+          } catch {
+            const cached = (_cachedListings || []).find(l => String(l.id) === listingId);
+            if (cached) openWhatsApp(cached.phone, cached.name);
+          }
+        }
+      }
+
+      if (event.target.closest('[data-open-search]')) openSearch();
+      if (event.target.closest('[data-close-search]')) closeSearch();
+      if (event.target.closest('[data-close-requirements]')) closeRequirements();
+      if (event.target.closest('[data-account-button]')) toggleAccountPopover();
+
+      const roleButton = event.target.closest('[data-role-option]');
+      if (roleButton) setRole(roleButton.dataset.roleOption);
+
+      const result = event.target.closest('[data-result-filter]');
+      if (result) {
+        closeSearch();
+        setPage('marketplace', { filter: result.dataset.resultFilter });
+      }
+
+      if (event.target === $('#searchOverlay')) closeSearch();
+      if (event.target === $('#requirementOverlay')) closeRequirements();
+      if (!event.target.closest('[data-account-button]') && !event.target.closest('#accountPopover')) closeAccountPopover();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeSearch();
+      if (event.key === 'Escape') closeRequirements();
+      if (event.key === 'Escape') closeAccountPopover();
+    });
+
+    $('#marketSearch')?.addEventListener('input', renderListings);
+    $('#globalSearch').addEventListener('input', (event) => renderSearchResults(event.target.value));
+    $('#registrationForm').addEventListener('submit', submitRegistration);
+    $('#reg-category').addEventListener('change', (event) => {
+      setCategoryFields(event.target.value);
+      showRequirements(event.target.value);
+    });
+    $$('.select').forEach((select) => {
+      select.addEventListener('change', () => toggleOtherDetail(select));
+    });
+
+    hydrateIcons();
+    // Restore session on page load
+    if (_sessionAccount) applyAccount(_sessionAccount);
+    renderListings();
+    renderStoreListings();
+
+    // ── T-SHIRT CUSTOMIZER ──────────────────────────────────────────────
+    function setTshirtColor(fill, border) {
+      document.getElementById('tshirtBody').setAttribute('fill', fill);
+      document.getElementById('tshirtSleeve1').setAttribute('fill', fill);
+      document.getElementById('tshirtSleeve2').setAttribute('fill', fill);
+      // Update text colour for white shirt
+      const textEl = document.getElementById('tshirtText');
+      textEl.style.color = fill === '#fff' || fill === '#c8c8c8' ? 'rgba(30,30,30,0.88)' : 'rgba(255,255,255,0.92)';
+      // Update button outlines
+      document.querySelectorAll('#colorPicker button').forEach(b => {
+        b.style.outline = 'none';
+        b.style.outlineOffset = '0';
+      });
+      event.currentTarget.style.outline = '2px solid ' + (fill === '#fff' ? '#aaa' : fill);
+      event.currentTarget.style.outlineOffset = '2px';
+    }
+
+    function updateTshirtText(val) {
+      document.getElementById('tshirtText').textContent = val;
+    }
+
+    function selectSize(btn) {
+      document.querySelectorAll('#sizePicker button').forEach(b => {
+        b.style.background = 'rgba(94,125,72,0.12)';
+        b.style.color = 'var(--moss)';
+        b.style.borderColor = 'rgba(94,125,72,0.5)';
+      });
+      btn.style.background = 'var(--moss)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--moss)';
+    }
+
+    function orderCustomTshirt() {
+      const text = document.getElementById('tshirtTextInput').value.trim();
+      const qty = document.getElementById('tshirtQty').value || '1';
+      const selectedSize = [...document.querySelectorAll('#sizePicker button')].find(b => b.style.background.includes('94') || b.style.color === 'rgb(255, 255, 255)')?.textContent || 'L';
+      const msg = encodeURIComponent(`Hi! I want to order a custom t-shirt from StudentHub.\n\nCustom text: "${text || 'None'}"\nSize: ${selectedSize}\nQuantity: ${qty}\n\nPlease share pricing and design details.`);
+      window.open('https://wa.me/919876543222?text=' + msg, '_blank');
+    }
+
+    async function renderStoreListings(filter) {
+      const container = document.getElementById('storeListings');
+      if (!container) return;
+
+      container.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Loading merchandise…</div>';
+
+      // Fetch merch from DB + seed
+      const dbMerch = await fetchListingsFromDB('merch');
+      const dbIds = new Set(dbMerch.map(i => String(i.id)));
+      const seedMerch = seedListings.filter(l => l.cat === 'merch' && !dbIds.has(String(l.id)));
+      const listings = [...seedMerch, ...dbMerch];
+
+      const filtered = filter && filter !== 'all'
+        ? listings.filter(l => l.name.toLowerCase().includes(filter.replace('hoodies','hood').replace('tees','tee').replace('mugs','mug').replace('stickers','stick')))
+        : listings;
+
+      if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No merchandise listings yet. <button type="button" data-page="register" style="color:var(--gold);font-weight:800;background:none;border:none;cursor:pointer">Be the first to add yours →</button></div>';
+        hydrateIcons();
+        return;
+      }
+      container.innerHTML = filtered.map(item => `
+        <article class="listing-card merch">
+          <div class="listing-media">
+            <span class="listing-symbol" data-icon="shirt"></span>
+            <span class="rating">${item.rating}</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-category">Merchandise</div>
+            <h3 class="listing-name">${item.name}</h3>
+            <div class="listing-provider">${item.by}</div>
+            <div class="listing-meta">${item.meta}</div>
+            <button class="listing-action" type="button" data-contact="${item.id}" style="margin-top:auto">Contact via WhatsApp</button>
+          </div>
+        </article>
+      `).join('');
+      hydrateIcons();
+    }
+
+    document.addEventListener('click', e => {
+      const sf = e.target.closest('[data-store-filter]');
+      if (sf) {
+        document.querySelectorAll('[data-store-filter]').forEach(b => b.classList.remove('active'));
+        sf.classList.add('active');
+        renderStoreListings(sf.dataset.storeFilter);
+      }
+    });
+
+    // ── LOGIN / SIGNUP FLOW ────────────────────────────────────────────
+    function showSignup() {
+      document.getElementById('loginPanel').style.display = 'none';
+      document.getElementById('signupPanel').style.display = 'block';
+      document.getElementById('roleChooserPanel').style.display = 'block';
+      document.getElementById('signupFormPanel').style.display = 'none';
+    }
+
+    function showLoginPanel() {
+      document.getElementById('loginPanel').style.display = '';
+      document.getElementById('signupPanel').style.display = 'none';
+    }
+
+    function startSignup(role) {
+      document.getElementById('roleChooserPanel').style.display = 'none';
+      document.getElementById('signupFormPanel').style.display = 'block';
+      setRole(role);
+      const badge = document.getElementById('selectedRoleBadge');
+      if (badge) badge.textContent = role === 'learner'
+        ? '👤 You are signing up as a Learner — find tutors, coaches, and merchandise.'
+        : '🎓 You are signing up as a Teacher / Provider — list your services and earn.';
+    }
+
+    function backToRoleChooser() {
+      document.getElementById('signupFormPanel').style.display = 'none';
+      document.getElementById('roleChooserPanel').style.display = 'block';
+    }
+
+    async function handleLogin() {
+      const user = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value.trim();
+      if (!user || !pass) { showToast('Please enter your username and password.'); return; }
+
+      const loginBtn = document.querySelector('#loginPanel .submit-button, #loginPanel button[type=button]');
+      if (loginBtn) loginBtn.disabled = true;
+
+      try {
+        // Detect if user typed a phone number or a name
+        const isPhone = /^\d{7,}$/.test(user.replace(/\D/g, '')) && user.replace(/\D/g,'').length >= 7;
+        const body = isPhone ? { phone: user, password: pass } : { name: user, password: pass };
+        const { user: acc, token } = await apiFetch('/api/auth/login', {
+          method: 'POST', body: JSON.stringify(body)
+        });
+        saveSession(acc, token);
+        showToast(`Welcome back, ${acc.name}!`);
+        applyAccount(acc);
+        setPage('marketplace');
+      } catch (err) {
+        showToast(err.message || 'Login failed. Please try again.');
+      } finally {
+        if (loginBtn) loginBtn.disabled = false;
+      }
+    }
+
+    // ── SELL ON STUDENTHUB MODAL ────────────────────────────────────────
+    function openSellModal() {
+      const overlay = document.getElementById('sellOverlay');
+      overlay.style.display = 'flex';
+    }
+
+    function closeSellModal() {
+      document.getElementById('sellOverlay').style.display = 'none';
+    }
+
+    async function submitSellForm() {
+      const name    = document.getElementById('sell-name').value.trim();
+      const college = document.getElementById('sell-college').value.trim();
+      const phone   = document.getElementById('sell-phone').value.trim();
+      const product = document.getElementById('sell-product').value.trim();
+
+      if (!name) { showToast('Please enter your full name.'); return; }
+      if (!phone) { showToast('Please enter your WhatsApp number.'); return; }
+      if (!product) { showToast('Please describe what you sell.'); return; }
+
+      try {
+        await apiFetch('/api/sell-enquiry', {
+          method: 'POST',
+          body: JSON.stringify({ name, college, phone, product })
+        });
+      } catch { /* non-critical — still open WhatsApp */ }
+
+      const msg = encodeURIComponent(
+        'Hi! I want to sell on StudentHub Store.\n\n' +
+        'Name: ' + name + '\n' +
+        (college ? 'College: ' + college + '\n' : '') +
+        'WhatsApp: ' + phone + '\n' +
+        'Products: ' + product + '\n\n' +
+        'Please list me as a merchandise seller.'
+      );
+      window.open('https://wa.me/919876543210?text=' + msg, '_blank');
+      closeSellModal();
+      showToast('Details sent! We will reach out on WhatsApp shortly.');
+    }
+
+    // Close sell modal on overlay click
+    document.getElementById('sellOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeSellModal();
+    });
+
+    // ── PROFILE MODAL ──────────────────────────────────────────────────
+    function openProfileModal() {
+      const acc = storedAccount();
+      if (!acc) { showToast('No account found. Please sign up first.'); return; }
+      const roleLabel = acc.roleLabel || acc.role_label || acc.role || 'Member';
+      // populate view
+      document.getElementById('profileAvatarLg').textContent = initialsFromName(acc.name);
+      document.getElementById('profileTitle').textContent = acc.name || 'Your Name';
+      document.getElementById('profileRoleBadge').textContent = roleLabel;
+      document.getElementById('pv-name').textContent = acc.name || '—';
+      document.getElementById('pv-college').textContent = acc.college || '—';
+      document.getElementById('pv-phone').textContent = acc.phone || '—';
+      document.getElementById('pv-role').textContent = roleLabel;
+      document.getElementById('pv-summary').textContent = acc.summary || '';
+      // ensure view mode
+      switchToViewMode();
+      const overlay = document.getElementById('profileOverlay');
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeProfileModal() {
+      const overlay = document.getElementById('profileOverlay');
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function switchToEditMode() {
+      const acc = storedAccount();
+      document.getElementById('edit-name').value = acc ? (acc.name || '') : '';
+      document.getElementById('edit-college').value = acc ? (acc.college || '') : '';
+      document.getElementById('edit-phone').value = acc ? (acc.phone || '') : '';
+      document.getElementById('profileViewMode').style.display = 'none';
+      document.getElementById('profileEditMode').style.display = '';
+      document.getElementById('profileViewActions').style.display = 'none';
+      document.getElementById('profileEditActions').style.display = '';
+    }
+
+    function switchToViewMode() {
+      document.getElementById('profileViewMode').style.display = '';
+      document.getElementById('profileEditMode').style.display = 'none';
+      document.getElementById('profileViewActions').style.display = '';
+      document.getElementById('profileEditActions').style.display = 'none';
+    }
+
+    async function saveProfileEdits() {
+      const name    = document.getElementById('edit-name').value.trim();
+      const college = document.getElementById('edit-college').value.trim();
+      const phone   = document.getElementById('edit-phone').value.trim();
+      if (!name) { showToast('Name cannot be empty.'); return; }
+
+      try {
+        const updated = await apiFetch('/api/auth/me', {
+          method: 'PATCH',
+          body: JSON.stringify({ name, college, phone })
+        });
+        // Merge with current session account
+        const acc = { ..._sessionAccount, ...updated };
+        saveSession(acc, _sessionToken);
+        // refresh view panel
+        document.getElementById('profileTitle').textContent = name;
+        document.getElementById('profileAvatarLg').textContent = initialsFromName(name);
+        document.getElementById('pv-name').textContent = name;
+        document.getElementById('pv-college').textContent = college || '—';
+        document.getElementById('pv-phone').textContent = phone || '—';
+        applyAccount(acc);
+        switchToViewMode();
+        showToast('Profile updated successfully!');
+      } catch (err) {
+        showToast(err.message || 'Failed to save profile.');
+      }
+    }
+
+    // close profile on overlay click
+    document.getElementById('profileOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeProfileModal();
+    });
+
+    // ── LOGOUT ─────────────────────────────────────────────────────────
+    function openLogoutConfirm() {
+      const overlay = document.getElementById('logoutOverlay');
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLogoutConfirm() {
+      const overlay = document.getElementById('logoutOverlay');
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function confirmLogout() {
+      clearSession();
+      closeLogoutConfirm();
+      // reset avatar buttons
+      $$('[data-account-button]').forEach(b => {
+        b.classList.remove('show');
+        b.removeAttribute('title');
+      });
+      $$('[data-account-initials]').forEach(n => { n.textContent = 'SH'; });
+      document.getElementById('accountName').textContent = 'StudentHub user';
+      document.getElementById('accountRole').textContent = 'Registered account';
+      // Restore Join/Create-profile elements after logout
+      showJoinElements();
+      renderListings();
+      setPage('home');
+      showToast('You have been logged out.');
+    }
+
+    // close logout overlay on backdrop click
+    document.getElementById('logoutOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeLogoutConfirm();
+    });
+
+    // close profile/logout on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeProfileModal();
+        closeLogoutConfirm();
+      }
+    });
+
+    // ── SCHEDULE CHIPS ─────────────────────────────────────────────────
+    document.getElementById('scheduleChips').addEventListener('click', function(e) {
+      const chip = e.target.closest('.schedule-chip');
+      if (!chip) return;
+      chip.classList.toggle('selected');
+      // Build text from selected chips
+      const selected = Array.from(this.querySelectorAll('.schedule-chip.selected')).map(c => c.dataset.chip);
+      const input = document.getElementById('learn-schedule');
+      input.value = selected.join(', ');
+    });
+  </script>
+</body>
+</html>
