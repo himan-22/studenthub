@@ -2149,7 +2149,7 @@
                 Browse services
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </button>
-              <button class="btn ghost" type="button" data-page="register">
+              <button class="btn ghost" type="button" data-page="register" id="heroJoinBtn">
                 Join free
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
               </button>
@@ -2203,7 +2203,7 @@
             <h2 class="section-title">How it works</h2>
             <p class="section-copy">From profile to first booking in four practical steps.</p>
           </div>
-          <button class="text-link" type="button" data-page="howto">Full guide <span aria-hidden="true">-></span></button>
+          <button class="text-link" type="button" data-page="howto">Know more <span aria-hidden="true">-></span></button>
         </div>
         <div class="steps">
           <article class="step"><div class="step-number">01</div><h3>Register</h3><p>Create a provider or learner profile with your college and WhatsApp details.</p></article>
@@ -2221,7 +2221,7 @@
             <h1 class="section-title">Marketplace</h1>
             <p class="section-copy">Browse student-led services or add your own profile to the platform.</p>
           </div>
-          <button class="btn primary" type="button" id="addYourServiceBtn" onclick="handleAddService()">Add your service</button>
+          
         </div>
 
         <div class="market-categories">
@@ -2233,7 +2233,7 @@
                 <div class="market-category-sub">Learn from peer experts</div>
               </div>
             </div>
-            <button class="market-add-card" type="button" data-page="register">
+            <button class="market-add-card provider-only-btn" id="addTutoringCard" type="button" onclick="handleAddService()">
               <span class="market-add-icon" data-icon="plus"></span>
               <span class="market-add-title">Add Yours</span>
               <span class="market-add-copy">List your tutoring service</span>
@@ -2249,7 +2249,7 @@
                 <div class="market-category-sub">Coaching and wellness</div>
               </div>
             </div>
-            <button class="market-add-card" type="button" data-page="register">
+            <button class="market-add-card provider-only-btn" id="addFitnessCard" type="button" onclick="handleAddService()">
               <span class="market-add-icon" data-icon="plus"></span>
               <span class="market-add-title">Add Yours</span>
               <span class="market-add-copy">List your fitness service</span>
@@ -2268,7 +2268,7 @@
             <button class="market-add-card" type="button" data-page="store" style="min-height:248px">
               <span class="market-add-icon" data-icon="shirt"></span>
               <span class="market-add-title">Visit the Store</span>
-              <span class="market-add-copy">Customize your own t-shirt or browse student-run merchandise listings.</span>
+              <span class="market-add-copy">Customize your own.</span>
               <span class="market-add-button"><span>Go to Store →</span></span>
             </button>
           </div>
@@ -2303,7 +2303,7 @@
             <h1 class="section-title">Merchandise Store</h1>
             <p class="section-copy">Design your own t-shirt or explore student-run products — hoodies, mugs, batch tees, and more.</p>
           </div>
-          <button class="btn primary" type="button" onclick="openSellModal()">Sell on StudentHub</button>
+          <button class="btn primary provider-only-btn" id="sellOnStudentHubBtn" type="button" onclick="openSellModal()">Sell on StudentHub</button>
         </div>
 
         <!-- T-SHIRT CUSTOMIZER -->
@@ -2336,7 +2336,7 @@
               <button class="filter-button" type="button" data-store-filter="hoodies">Hoodies</button>
               <button class="filter-button" type="button" data-store-filter="tees">T-Shirts</button>
               <button class="filter-button" type="button" data-store-filter="mugs">Mugs & Mementos</button>
-              <button class="filter-button" type="button" data-store-filter="stickers">Stickers & Stationery</button>
+             
             </div>
           </aside>
           <div>
@@ -2362,8 +2362,9 @@
             <p style="margin:0 0 22px;color:var(--muted);font-size:14px">Sign in to access your StudentHub account.</p>
             <div style="display:grid;gap:14px">
               <div class="field">
-                <label for="login-username">Username or Email id</label>
-                <input class="input" id="login-username" type="text" placeholder="yourname or +91 98765 43210" autocomplete="username" />
+                <label for="login-phone">Phone Number</label>
+                <input class="input" id="login-phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" />
+                <div style="margin-top:5px;font-size:12px;color:var(--muted)">Use the WhatsApp number you registered with.</div>
               </div>
               <div class="field">
                 <label for="login-password">Password</label>
@@ -2383,7 +2384,7 @@
             </div>
             <div class="benefits">
               <div class="benefit"><span class="benefit-icon" data-icon="search"></span><div><strong>Better discovery</strong><span>Providers get found. Learners describe exactly what they need.</span></div></div>
-              <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>WhatsApp first</strong><span>Conversations stay direct, fast, and easy to coordinate.</span></div></div>
+              <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>Fast and connected</strong><span>Communicate effortlessly anytime, anywhere.</span></div></div>
               <div class="benefit"><span class="benefit-icon" data-icon="wallet"></span><div><strong>Clear terms</strong><span>Rates, schedules, delivery timelines, and requirements are captured upfront.</span></div></div>
               <div class="benefit"><span class="benefit-icon" data-icon="star"></span><div><strong>Premium profile</strong><span>The account avatar appears after signup and stores your profile locally.</span></div></div>
             </div>
@@ -2439,12 +2440,13 @@
 
                   <div class="field">
                     <label for="reg-name">Full name</label>
-                    <input class="input" id="reg-name" type="text" placeholder="Priyanka Borah" autocomplete="name" required />
+                    <input class="input" id="reg-name" type="text" placeholder="John Doe" autocomplete="name" required />
                   </div>
                   <div class="field">
                     <label for="reg-college">College or university</label>
-                    <input class="input" id="reg-college" type="text" placeholder="XYZ College" autocomplete="organization" />
+                    <input class="input" id="reg-college" type="text" placeholder="Delhi University" autocomplete="organization" />
                   </div>
+                  
                   <div class="field">
                     <label for="reg-phone">WhatsApp number</label>
                     <input class="input" id="reg-phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required />
@@ -2492,7 +2494,7 @@
                           <option>Master's Degree</option>
                           <option>PhD</option>
                           <option>Pursuing Degree</option>
-                          <option>Other</option>
+                          <option>Other(Qualification > 12th Standard)</option>
                         </select>
                       </div>
                       <div class="field other-detail" data-other-for="reg-education">
@@ -2716,7 +2718,6 @@
                               <option value="">Select category</option>
                               <option value="Tutoring">Tutoring</option>
                               <option value="Fitness">Fitness</option>
-                              <option value="Merchandise">Merchandise</option>
                             </select>
                           </div>
                           <div class="field">
@@ -2955,7 +2956,7 @@
                       </div>
                       <div class="field full">
                         <label for="learn-goal">Learning goal</label>
-                        <textarea id="learn-goal" placeholder="Tell us your exam, fitness goal, product need, deadline, or any specific expectation."></textarea>
+                        <textarea id="learn-goal" placeholder="Tell us which class content you want to learn"></textarea>
                       </div>
                     </div>
                   </div>
@@ -2973,7 +2974,7 @@
                 </div>
                 <div class="benefits">
                   <div class="benefit"><span class="benefit-icon" data-icon="search"></span><div><strong>Better discovery</strong><span>Providers get found. Learners describe exactly what they need.</span></div></div>
-                  <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>WhatsApp first</strong><span>Conversations stay direct, fast, and easy to coordinate.</span></div></div>
+                  <div class="benefit"><span class="benefit-icon" data-icon="whatsapp"></span><div><strong>Fast and connected</strong><span>Communicate effortlessly anytime, anywhere.</span></div></div>
                   <div class="benefit"><span class="benefit-icon" data-icon="wallet"></span><div><strong>Clear terms</strong><span>Rates, schedules, delivery timelines, and requirements are captured upfront.</span></div></div>
                   <div class="benefit"><span class="benefit-icon" data-icon="star"></span><div><strong>Premium profile</strong><span>The account avatar appears after signup and stores your profile locally.</span></div></div>
                 </div>
@@ -2989,36 +2990,27 @@
 
       <!-- ABOUT SECTION -->
       <section class="section" style="border-bottom: 1px solid var(--line);">
-        <div style="max-width: 780px;">
+        <div style="width: 100%; text-align: justify;">
           <div class="eyebrow" style="color: var(--gold); margin-bottom: 16px;">About StudentHub</div>
           <h1 class="section-title" style="margin-bottom: 20px;">NE India's student economy, <em style="font-style:italic; color: var(--gold);">built by students.</em></h1>
-          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 18px;">
-            StudentHub is a peer-to-peer platform built specifically for students across Northeast India. We connect students who have skills — in tutoring, fitness coaching, or merchandise — with learners and buyers on their own campuses and beyond.
-          </p>
-          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 18px;">
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 20px;text-align: justify;">
+            Welcome! We’re so glad you’re here. Step into a friendly and supportive community where students and individuals come together to share knowledge, skills, and real-life experiences. We believe that everyone has something valuable to offer, and here, your knowledge can not only help others grow but also become a source of income for you.
             The idea is simple: college students are already teaching, training, and selling. StudentHub gives them a credible, structured place to do it — with clean profiles, transparent pricing, and direct WhatsApp communication that keeps things fast and personal.
           </p>
-          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0;">
-            Whether you're a learner looking for affordable, reliable support from someone who actually gets campus life — or a provider ready to turn your skills into consistent income — StudentHub is built for both sides of that conversation.
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 20px;">
+            Whether you're looking for academic support, practical guidance, or new skills, you’ll find people ready to help. Users can explore a wide range of study-related courses, while those passionate about teaching can step in as tutors by creating and offering their own courses.
           </p>
+
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 20px;">
+            Beyond academics, our platform opens doors to diverse learning opportunities. From fitness coaching to design and other professional skills, our experts are here to guide you with their experience so you can achieve the best results.
+          </p>
+
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85; margin: 0 0 20px;">We also bring adventure to your fingertips. Plan and book trips with your friends to explore the beautiful landscapes of North East India. Our experienced guides are excited to accompany you, ensuring a memorable and enriching travel experience.</p>
+       
+          <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.85;margin: 0px;">Don’t miss out on the opportunity to learn, earn, and explore. Click “Join” and become a part of our growing community today.</p>
+       
         </div>
 
-        <div class="about-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px;">
-          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
-            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">NE India</div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Region focused</div>
-            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Built for the students, colleges, and communities of Northeast India.</div>
-          </div>
-          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
-            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">90%</div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Earnings kept</div>
-            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Providers keep the majority of every session, sale, or order they complete.</div>
-          </div>
-          <div style="padding: 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel);">
-            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--gold-2); line-height: 1; margin-bottom: 8px;">3 min</div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">To get listed</div>
-            <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Fill in your profile once and start receiving interest from learners right away.</div>
-          </div>
         </div>
       </section>
 
@@ -3038,35 +3030,18 @@
           <article class="step"><div class="step-number">04</div><h3>Continue</h3><p>Learn, earn, reorder, improve, and keep building your campus network.</p></article>
         </div>
       </section>
-
-      <section class="section compact">
-        <div class="section-head">
-          <div>
-            <h2 class="section-title">Commission structure</h2>
-            <p class="section-copy">Transparent enough to explain in one message.</p>
-          </div>
-        </div>
-        <div class="commission-wrap">
-          <table class="commission">
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Typical earning</th>
-                <th>Platform cut</th>
-                <th>You keep</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Peer tutoring</td><td>Earn per session</td><td>10%</td><td class="keep">90%</td></tr>
-              <tr><td>Fitness coaching</td><td>Earn per session</td><td>10%</td><td class="keep">90%</td></tr>
-              <tr><td>College merchandise</td><td>Earn per item</td><td>Vendor managed</td><td class="keep">Margin kept</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      
+    <!-- ADD THESE TWO CLOSING TAGS -->
     </section>
   </main>
+  <!-- ============================ -->
 
+      <!-- SELL ON STUDENTHUB MODAL -->
+      <div id="sellOverlay" style="display:none;position:fixed;inset:0;z-index:75;background:rgba(11,13,18,0.72);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
+        </div>
+      </section>
+
+      
   <!-- SELL ON STUDENTHUB MODAL -->
   <div id="sellOverlay" style="display:none;position:fixed;inset:0;z-index:75;background:rgba(11,13,18,0.72);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
     <div style="width:min(480px,100%);border:1px solid rgba(215,180,107,0.24);border-radius:18px;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,0.30);overflow:hidden;animation:pageIn 240ms cubic-bezier(.22,1,.36,1) both">
@@ -3102,6 +3077,76 @@
     </div>
   </div>
 
+
+  <!-- LEARNER ADD-SERVICE MODAL -->
+  <div id="lasOverlay" style="display:none;position:fixed;inset:0;z-index:75;background:rgba(11,13,18,0.72);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px;overflow-y:auto">
+    <div style="width:min(520px,100%);border:1px solid rgba(215,180,107,0.26);border-radius:18px;background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,0.30);overflow:hidden;animation:pageIn 240ms cubic-bezier(.22,1,.36,1) both;margin:auto">
+      <div style="padding:22px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+        <div>
+          <div style="color:var(--gold);font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">Add Your Service</div>
+          <h2 style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:24px;line-height:1.1">List a service on the marketplace</h2>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.55">Your basic details are already filled in — just add your service info below.</p>
+        </div>
+        <button onclick="closeLasModal()" style="width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:999px;background:#fcfbf8;color:var(--muted);font-size:20px;line-height:1;flex:0 0 auto;cursor:pointer">&#x2715;</button>
+      </div>
+      <div style="padding:22px 24px;display:grid;gap:14px">
+        <div style="background:rgba(189,152,81,0.09);border:1px solid rgba(189,152,81,0.28);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:10px">
+          <svg width="16" height="16" fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>Your account details are pre-filled from your learner profile.</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="field">
+            <label for="las-name">Full name</label>
+            <input class="input" id="las-name" type="text" placeholder="Your name" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="las-college">College / University</label>
+            <input class="input" id="las-college" type="text" placeholder="e.g. Jorhat Engineering College" autocomplete="organization" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="las-phone">WhatsApp number</label>
+          <input class="input" id="las-phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" />
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:14px;margin-top:2px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Service Details</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field">
+              <label for="las-category">Service category</label>
+              <select class="select" id="las-category" onchange="lasSetCategoryFields(this.value)">
+                <option value="">Select category</option>
+                <option value="Tutoring">Tutoring</option>
+                <option value="Fitness">Fitness Coaching</option>
+                <option value="Merchandise">Merchandise</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="las-rate">Rate / service details</label>
+              <input class="input" id="las-rate" type="text" placeholder="e.g. &#x20B9;200/session" />
+            </div>
+          </div>
+        </div>
+        <div id="las-tutoring-fields" style="display:none;border:1px solid rgba(189,152,81,0.22);border-radius:10px;padding:14px;background:rgba(189,152,81,0.05)">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Tutoring Details</div>
+          <div style="display:grid;gap:10px">
+            <div class="field"><label for="las-subjects">Subjects you can teach</label><input class="input" id="las-subjects" type="text" placeholder="e.g. Physics, Math, Chemistry" /></div>
+            <div class="field"><label for="las-grades">Classes / exams you target</label><input class="input" id="las-grades" type="text" placeholder="e.g. Class 11-12, JEE, SEBA" /></div>
+          </div>
+        </div>
+        <div id="las-fitness-fields" style="display:none;border:1px solid rgba(138,79,102,0.20);border-radius:10px;padding:14px;background:rgba(138,79,102,0.04)">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Fitness Details</div>
+          <div class="field"><label for="las-fitness-type">Coaching type</label><input class="input" id="las-fitness-type" type="text" placeholder="e.g. Yoga, Zumba, Strength Training" /></div>
+        </div>
+        <div id="las-merch-fields" style="display:none;border:1px solid rgba(94,125,72,0.20);border-radius:10px;padding:14px;background:rgba(94,125,72,0.04)">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Merchandise Details</div>
+          <div class="field"><label for="las-merch-type">What do you sell?</label><input class="input" id="las-merch-type" type="text" placeholder="e.g. Custom hoodies, batch tees, mugs" /></div>
+        </div>
+        <button onclick="submitLasForm()" style="min-height:48px;border-radius:10px;background:var(--night);color:#fff;font-size:14px;font-weight:800;border:0;cursor:pointer;margin-top:4px">Add My Service to Marketplace</button>
+      </div>
+    </div>
+  </div>
+
+ 
 
   <nav class="bottom-nav" aria-label="Mobile primary">
     <button class="bottom-button active" type="button" data-page="home"><span data-icon="home"></span><span>Home</span></button>
@@ -3181,6 +3226,7 @@
           <div class="profile-field-label">Role</div>
           <div class="profile-field-value" id="pv-role">&#x2014;</div>
         </div>
+        
         <div class="profile-field-row">
           <div class="profile-field-label">Profile Summary</div>
           <div class="profile-field-value" id="pv-summary" style="color:var(--muted);font-size:13px;line-height:1.55"></div>
@@ -3402,13 +3448,95 @@
       return parts.slice(0, 2).map((part) => part[0]).join('').toUpperCase();
     }
 
-    function handleAddService() {
-      if (storedAccount()) {
-        setPage('register', { _force: true });
-        showSignup();
-        startSignup('provider');
-      } else {
-        setPage('register');
+   function handleAddService() {
+  const acc = storedAccount();
+  
+  // 1. If not logged in, go to the register page
+  if (!acc) {
+    setPage('register');
+    showSignup();
+    startSignup('provider');
+    return;
+  }
+  
+  // 2. If the user is a learner, open the smart "add service" modal
+  if (acc.role === 'learner' || acc.roleLabel === 'Learner account' || acc.role_label === 'Learner account') {
+    openLearnerAddServiceModal();
+    return;
+  }
+  
+  // 3. NEW: If the user is already signed in as a tutor/provider, show the "Thank you" modal
+  if (acc.role === 'provider' || (acc.roleLabel && acc.roleLabel.toLowerCase().includes('provider')) || (acc.role_label && acc.role_label.toLowerCase().includes('provider'))) {
+    showContactThankYou();
+    return;
+  }
+
+  // 4. Fallback for any other state
+  setPage('register', { _force: true });
+  showSignup();
+  startSignup('provider');
+}
+
+    function openLearnerAddServiceModal() {
+      const acc = storedAccount();
+      // Pre-fill from existing account
+      const el = document.getElementById('las-name');
+      if (el) el.value = acc ? (acc.name || '') : '';
+      const elC = document.getElementById('las-college');
+      if (elC) elC.value = acc ? (acc.college || '') : '';
+      const elP = document.getElementById('las-phone');
+      if (elP) elP.value = acc ? (acc.phone || '') : '';
+      // Reset service fields
+      const catSel = document.getElementById('las-category');
+      if (catSel) { catSel.value = ''; lasSetCategoryFields(''); }
+      const rateFld = document.getElementById('las-rate');
+      if (rateFld) rateFld.value = '';
+      document.getElementById('lasOverlay').style.display = 'flex';
+    }
+
+    function closeLasModal() {
+      document.getElementById('lasOverlay').style.display = 'none';
+    }
+
+    function lasSetCategoryFields(cat) {
+      document.getElementById('las-tutoring-fields').style.display = cat === 'Tutoring' ? '' : 'none';
+      document.getElementById('las-fitness-fields').style.display = cat === 'Fitness' ? '' : 'none';
+      document.getElementById('las-merch-fields').style.display = cat === 'Merchandise' ? '' : 'none';
+    }
+
+    async function submitLasForm() {
+      const acc      = storedAccount();
+      const name     = document.getElementById('las-name').value.trim() || (acc && acc.name) || '';
+      const college  = document.getElementById('las-college').value.trim() || (acc && acc.college) || 'StudentHub member';
+      const phone    = document.getElementById('las-phone').value.trim() || (acc && acc.phone) || '';
+      const category = document.getElementById('las-category').value;
+      const rate     = document.getElementById('las-rate').value.trim();
+
+      if (!name)     { showToast('Please confirm your full name.'); return; }
+      if (!phone)    { showToast('Please confirm your WhatsApp number.'); return; }
+      if (!category) { showToast('Please select a service category.'); return; }
+      if (!rate)     { showToast('Please enter your rate or service details.'); return; }
+
+      const cat = { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' }[category] || 'tutoring';
+      const listingName = category === 'Tutoring'
+        ? (document.getElementById('las-subjects')?.value.trim() ? document.getElementById('las-subjects').value.trim() + ' Tutoring' : 'Tutoring')
+        : category;
+
+      try {
+        await apiFetch('/api/listings', {
+          method: 'POST',
+          body: JSON.stringify({ cat, name: listingName, by: `${name} - ${college}`, meta: rate, phone: phone.replace(/[^\d]/g,'') })
+        });
+        // Upgrade the stored account role to provider
+        const updated = { ...acc, role: 'provider', roleLabel: `${category} provider` };
+        saveSession(updated, _sessionToken);
+        applyAccount(updated);
+        renderListings();
+        closeLasModal();
+        showToast(`Your ${category} service has been added to the marketplace!`);
+        setPage('marketplace');
+      } catch (err) {
+        showToast(err.message || 'Could not add service. Please try again.');
       }
     }
 
@@ -3420,7 +3548,7 @@
       });
       $$('[data-account-button]').forEach((button) => {
         button.classList.add('show');
-        button.setAttribute('title', `${account.name} - ${account.roleLabel || account.role || 'Member'}`);
+        button.setAttribute('title', `${account.name} - ${account.roleLabel || account.role_label || account.role || 'Member'}`);
       });
       const nameEl    = $('#accountName');
       const roleEl    = $('#accountRole');
@@ -3428,8 +3556,20 @@
       if (nameEl)    nameEl.textContent    = account.name || '';
       if (roleEl)    roleEl.textContent    = account.roleLabel || account.role_label || account.role || 'Member';
       if (summaryEl) summaryEl.textContent = account.summary || '';
-      // Hide Join/Create-profile elements now that a profile exists
       hideJoinElements();
+
+      // Hide "Add your service" / "Sell on StudentHub" buttons for learners
+  // Hide "Add your service" / "Sell on StudentHub" buttons for learners
+      const isLearner = account.role === 'learner' || account.roleLabel === 'Learner account' || account.role_label === 'Learner account';
+      $$('.provider-only-btn').forEach(el => {
+        el.style.display = isLearner ? 'none' : '';
+      });
+      
+      // Hide the entire category section for learners
+      const marketCategories = document.querySelector('.market-categories');
+      if (marketCategories) {
+        marketCategories.style.display = isLearner ? 'none' : '';
+      }
     }
 
     function toggleAccountPopover() {
@@ -3451,6 +3591,8 @@
       if (navJoin) navJoin.style.display = 'none';
       const bottomJoin = document.getElementById('bottomJoinBtn');
       if (bottomJoin) bottomJoin.style.display = 'none';
+      const heroJoin = document.getElementById('heroJoinBtn');
+      if (heroJoin) heroJoin.style.display = 'none';
     }
 
     function showJoinElements() {
@@ -3460,6 +3602,8 @@
       if (navJoin) navJoin.style.display = '';
       const bottomJoin = document.getElementById('bottomJoinBtn');
       if (bottomJoin) bottomJoin.style.display = '';
+      const heroJoin = document.getElementById('heroJoinBtn');
+      if (heroJoin) heroJoin.style.display = '';
     }
 
     function setPage(page, options = {}) {
@@ -3558,17 +3702,16 @@
             <h3 class="listing-name">${escapeHtml(item.name)}</h3>
             <div class="listing-provider">${escapeHtml(item.by)}</div>
             <div class="listing-meta">${escapeHtml(item.meta)}</div>
-            <button class="listing-action" type="button" data-contact="${item.id}">Contact now</button>
+            <button class="listing-action" type="button" data-contact="${item.id}">Enquire now</button>
           </div>
         </article>
       `).join('');
 
-      const addCard = `
-        <button class="listing-card add-card" type="button" onclick="handleAddService()">
-          <span class="add-icon">${icons.plus}</span>
-          <strong>Add your service</strong>
-          <span class="listing-meta">Create a listing in under 3 minutes.</span>
-        </button>
+      const acc = storedAccount();
+      const isLearner = acc && (acc.role === 'learner' || acc.roleLabel === 'Learner account' || acc.role_label === 'Learner account');
+
+      const addCard = isLearner ? '' : `
+       
       `;
 
       grid.innerHTML = items.length ? cards + addCard : `<div class="empty-state">No matching services yet. Try another search or add the first listing.</div>${addCard}`;
@@ -3767,132 +3910,129 @@
     }
 
     async function submitRegistration(event) {
-      event.preventDefault();
-      const name     = $('#reg-name').value.trim();
-      const college  = $('#reg-college').value.trim() || 'StudentHub member';
-      const category = $('#reg-category').value;
-      const phone    = $('#reg-phone').value.trim();
-      const details  = $('#reg-rate').value.trim();
-      const password = $('#reg-password').value;
-      const confirmPassword = $('#reg-confirm-password').value;
+  event.preventDefault();
 
-      if (!name) return showToast('Please enter your full name.');
-      if (!phone) return showToast('Please enter your WhatsApp number.');
-      if (!password) return showToast('Please create a password.');
-      if (password.length < 6) return showToast('Password must be at least 6 characters.');
-      if (password !== confirmPassword) return showToast('Passwords do not match. Please try again.');
+  const form = event.currentTarget;
+  const submitBtn = form ? form.querySelector('.submit-button') : null;
 
-      const submitBtn = event.currentTarget.querySelector('.submit-button');
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving…'; }
+  const name = $('#reg-name').value.trim();
+  const college = $('#reg-college').value.trim() || 'StudentHub member';
+  const category = $('#reg-category').value;
+  const phone = $('#reg-phone').value.trim();
+  const details = $('#reg-rate').value.trim();
+  const password = $('#reg-password').value;
+  const confirmPassword = $('#reg-confirm-password').value;
 
-      const cleanPhone = phone.replace(/[^\d]/g, '');
+  if (!name) return showToast('Please enter your full name.');
+  if (!phone) return showToast('Please enter your WhatsApp number.');
+  if (!password) return showToast('Please create a password.');
+  if (password.length < 6) return showToast('Password must be at least 6 characters.');
+  if (password !== confirmPassword) return showToast('Passwords do not match. Please try again.');
 
-      try {
-        if (currentRole === 'learner') {
-          if (!validateLearnerFields()) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
+  // Auto-generate a fallback username so the backend API doesn't fail
+  const cleanName = name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  const autoUsername = `${cleanName}${Math.floor(1000 + Math.random() * 9000)}`;
+  const cleanPhone = phone.replace(/[^\d]/g, '');
 
-          const learnCatVal = $('#learn-category').value;
-          const isLearnerOther = learnCatVal === 'Other';
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving…'; }
 
-          if (isLearnerOther) {
-            const provCat = $('#learn-prov-category').value;
-            if (!provCat) { showToast('Please select a service category for your provider listing.'); if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
-            if (!validateLearnerCategoryFields(provCat)) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Create learner account'; } return; }
+  try {
+    let payload = { name, phone: cleanPhone, college, password, username: autoUsername };
+    let listingPayload = null;
+    let signupType = '';
 
-            const provRate = $('#learn-prov-rate').value.trim();
-            const loExperience = $('#lo-experience').value ? `${$('#lo-experience').value} ${$('#lo-experience-unit').value}` : '';
-            const catMap = { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' };
-            const cat = catMap[provCat] || 'tutoring';
+    if (currentRole === 'learner') {
+      if (!validateLearnerFields()) return;
 
-            const roleLabel = `${provCat} provider`;
-            const summary = `${provCat} profile - ${provRate || (loExperience ? loExperience + ' experience' : 'New provider')}.`;
+      const learnCatVal = $('#learn-category').value;
+      const isLearnerOther = learnCatVal === 'Other';
 
-            // 1. Create user account
-            const { user: acc, token } = await apiFetch('/api/auth/signup', {
-              method: 'POST',
-              body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'provider', roleLabel, summary })
-            });
-            saveSession(acc, token);
+      if (isLearnerOther) {
+        const provCat = $('#learn-prov-category').value;
+        if (!provCat) return showToast('Please select a service category for your provider listing.');
+        if (!validateLearnerCategoryFields(provCat)) return;
 
-            // 2. Create listing
-            const listingName = provCat === 'Tutoring' ? `${$('#lo-subjects').value.trim() || provCat} Tutoring` : provCat;
-            await apiFetch('/api/listings', {
-              method: 'POST',
-              body: JSON.stringify({ cat, name: listingName, by: `${name} - ${college}`, meta: provRate || (loExperience ? `${loExperience} experience` : 'New provider'), phone: cleanPhone })
-            });
+        const provRate = $('#learn-prov-rate').value.trim();
+        const loExp = $('#lo-experience').value ? `${$('#lo-experience').value} ${$('#lo-experience-unit').value}` : '';
+        const listingName = provCat === 'Tutoring' ? `${$('#lo-subjects').value.trim() || provCat} Tutoring` : provCat;
+        const cat = { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' }[provCat] || 'tutoring';
 
-            event.currentTarget.reset();
-            setRole('learner');
-            document.getElementById('learnerProviderFields').style.display = 'none';
-            $$('#learnerTutoringFields, #learnerFitnessFields, #learnerMerchFields').forEach(el => el.classList.remove('show'));
-            $$('.other-detail').forEach(field => field.classList.remove('show'));
-            renderListings();
-            openAdminWhatsApp(name);
-            showToast(`Welcome, ${name}. Your provider listing has been submitted for review.`);
-            applyAccount(acc);
-            setPage('home');
-            return;
-          }
+        payload.role = 'provider';
+        payload.roleLabel = `${provCat} provider`;
+        payload.summary = `${provCat} profile - ${provRate || (loExp ? loExp + ' experience' : 'New provider')}.`;
 
-          // Regular learner
-          const interest = learnCatVal || 'General';
-          const summary = `${interest} learner - ${$('#learn-mode').value}, ${$('#learn-schedule').value}.`;
-          const { user: acc, token } = await apiFetch('/api/auth/signup', {
-            method: 'POST',
-            body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'learner', roleLabel: 'Learner account', summary })
-          });
-          saveSession(acc, token);
-          event.currentTarget.reset();
-          setRole('learner');
-          $$('.other-detail').forEach((field) => field.classList.remove('show'));
-          openAdminWhatsApp(name);
-          showToast(`Welcome, ${name}. Your learner account is ready.`);
-          applyAccount(acc);
-          setPage('home');
-          return;
-        }
-
-        // ── Provider ──
-        if (!category) return showToast('Please select a service category.');
-        if (!validateCategoryFields(category)) { if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit and join platform'; } return; }
-
-        const roleLabel = `${category} provider`;
-        const summary   = `${category} provider - application pending review.`;
-
-        const { user: acc, token } = await apiFetch('/api/auth/signup', {
-          method: 'POST',
-          body: JSON.stringify({ name, phone: cleanPhone, college, password, role: 'provider', roleLabel, summary })
-        });
-        saveSession(acc, token);
-
-        // Create listing (pending approval)
-        await apiFetch('/api/listings', {
-          method: 'POST',
-          body: JSON.stringify({
-            cat: { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' }[category] || 'tutoring',
-            name: details ? `${category} – ${details}` : category,
-            by: `${name} - ${college}`,
-            meta: details || 'Provider application pending review.',
-            phone: cleanPhone
-          })
-        });
-
-        event.currentTarget.reset();
-        setRole('provider');
-        $('#tutoringFields').classList.remove('show');
-        $('#fitnessFields').classList.remove('show');
-        $('#merchFields').classList.remove('show');
-        $$('.other-detail').forEach((field) => field.classList.remove('show'));
-        applyAccount(acc);   // ← create the profile avatar/header NOW
-        openAdminWhatsApp(name);
-        showProviderThankYou(name);
-
-      } catch (err) {
-        showToast(err.message || 'Registration failed. Please try again.');
-      } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = currentRole === 'learner' ? 'Create learner account' : 'Submit and join platform'; }
+        listingPayload = { cat, name: listingName, by: `${name} - ${college}`, meta: provRate || (loExp ? `${loExp} experience` : 'New provider'), phone: cleanPhone };
+        signupType = 'learner-provider';
+      } else {
+        payload.role = 'learner';
+        payload.roleLabel = 'Learner account';
+        payload.summary = `${learnCatVal || 'General'} learner - ${$('#learn-mode').value}, ${$('#learn-schedule').value}.`;
+        signupType = 'learner';
       }
+    } else {
+      // Provider logic
+      if (!category) return showToast('Please select a service category.');
+      if (!validateCategoryFields(category)) return;
+
+      payload.role = 'provider';
+      payload.roleLabel = `${category} provider`;
+      payload.summary = `${category} provider - application pending review.`;
+
+      listingPayload = {
+        cat: { Tutoring: 'tutoring', Fitness: 'fitness', Merchandise: 'merch' }[category] || 'tutoring',
+        name: details ? `${category} – ${details}` : category,
+        by: `${name} - ${college}`,
+        meta: details || 'Provider application pending review.',
+        phone: cleanPhone
+      };
+      signupType = 'provider';
     }
+
+    // 1. Send data to your signup API directly
+    const { user: acc, token } = await apiFetch('/api/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    acc.username = autoUsername;
+    saveSession(acc, token);
+    applyAccount(acc);
+
+    // 2. Post the listing to the marketplace if they are a provider
+    if (listingPayload) {
+      try { await apiFetch('/api/listings', { method: 'POST', body: JSON.stringify(listingPayload) }); } catch {}
+    }
+
+    // 3. Clean up the UI and route to the correct page
+    $('#signupFormPanel').style.display = 'none';
+    if ($('#registrationForm')) $('#registrationForm').reset();
+
+    if (signupType === 'learner') {
+      setRole('learner');
+      $$('.other-detail').forEach(f => f.classList.remove('show'));
+      showToast(`Welcome, ${acc.name}! Your account is ready.`);
+      setPage('home');
+    } else if (signupType === 'provider') {
+      renderListings();
+      showProviderThankYou(acc.name);
+    } else if (signupType === 'learner-provider') {
+      $('#learnerProviderFields').style.display = 'none';
+      $$('#learnerTutoringFields,#learnerFitnessFields,#learnerMerchFields').forEach(el => el.classList.remove('show'));
+      $$('.other-detail').forEach(f => f.classList.remove('show'));
+      renderListings();
+      showToast(`Welcome, ${acc.name}! Your account is ready.`);
+      setPage('home');
+    }
+
+  } catch (err) {
+    showToast(err.message || 'Registration failed. Please try again.');
+  } finally {
+    if (submitBtn) { 
+      submitBtn.disabled = false; 
+      submitBtn.textContent = currentRole === 'learner' ? 'Create learner account' : 'Submit and join platform'; 
+    }
+  }
+}
 
     function showProviderThankYou(name) {
       // Hide the signup form panel and show thank-you
@@ -3909,11 +4049,11 @@
           <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(26px,5vw,38px);margin:0 0 14px;line-height:1.15">Thank you for connecting with us!</h2>
           <p style="color:var(--muted);font-size:16px;line-height:1.7;margin:0 0 28px">
             We have received your provider application${name ? ', <strong style="color:var(--ink)">' + name + '</strong>' : ''}.<br>
-            We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via WhatsApp.
+            We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via Email.
           </p>
           <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(189,152,81,0.10);border:1px solid rgba(189,152,81,0.30);border-radius:12px;padding:14px 20px;margin-bottom:28px;font-size:14px;color:var(--ink)">
             <svg width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
-            Keep an eye on your WhatsApp for our team's message.
+            Keep an eye on your Email for our team's message.
           </div>
           <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
             <button type="button" onclick="document.getElementById('providerThankYouPanel').style.display='none';applyAccount(storedAccount());setPage('home');" style="min-height:44px;padding:0 22px;border-radius:9px;background:var(--night);color:#fff;font-size:14px;font-weight:800;border:0;cursor:pointer">
@@ -3927,7 +4067,7 @@
         document.getElementById('signupPanel').appendChild(thankYouDiv);
       } else {
         thankYouDiv.style.display = '';
-        thankYouDiv.querySelector('p').innerHTML = `We have received your provider application${name ? ', <strong style="color:var(--ink)">' + name + '</strong>' : ''}.<br>We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via WhatsApp.`;
+        thankYouDiv.querySelector('p').innerHTML = `We have received your provider application${name ? ', <strong style="color:var(--ink)">' + name + '</strong>' : ''}.<br>We will review your details and <strong style="color:var(--ink)">be in touch with you very soon</strong> via Email.`;
       }
     }
 
@@ -3996,31 +4136,32 @@
       const filterButton = event.target.closest('[data-filter-button]');
       if (filterButton) setFilter(filterButton.dataset.filterButton);
 
+      
       const contactButton = event.target.closest('[data-contact]');
-      if (contactButton) {
-        const listingId = contactButton.dataset.contact;
-        // Try seed listings first (fast path)
-        const seedItem = seedListings.find(l => String(l.id) === listingId);
-        if (seedItem) {
-          openWhatsApp(seedItem.phone, seedItem.name);
-        } else {
-          // DB listing — log contact and get phone
-          try {
-            if (_sessionToken) {
-              const { phone, name } = await apiFetch(`/api/listings/${listingId}/contact`, { method: 'POST' });
-              openWhatsApp(phone, name);
-            } else {
-              // Not logged in — find in cache
-              const cached = (_cachedListings || []).find(l => String(l.id) === listingId);
-              if (cached) openWhatsApp(cached.phone, cached.name);
-              else showToast('Please log in to contact this provider.');
-            }
-          } catch {
-            const cached = (_cachedListings || []).find(l => String(l.id) === listingId);
-            if (cached) openWhatsApp(cached.phone, cached.name);
-          }
-        }
-      }
+if (contactButton) {
+  const acc = storedAccount();
+  if (!acc) {
+    showToast('Please log in to connect with providers.');
+    setPage('register');
+    return;
+  }
+  
+  // 1. Get the ID of the listing they clicked
+  const listingId = contactButton.dataset.contact;
+  
+  // 2. Send the record to your backend silently
+  apiFetch('/api/record-contact', {
+    method: 'POST',
+    body: JSON.stringify({
+      listing_id: listingId,
+      user_phone: acc.phone,
+      user_name: acc.name
+    })
+  }).catch(err => console.error("Failed to log contact event:", err));
+
+  // 3. Show the thank-you message immediately
+  showContactThankYou();
+}
 
       if (event.target.closest('[data-open-search]')) openSearch();
       if (event.target.closest('[data-close-search]')) closeSearch();
@@ -4136,7 +4277,7 @@
             <h3 class="listing-name">${item.name}</h3>
             <div class="listing-provider">${item.by}</div>
             <div class="listing-meta">${item.meta}</div>
-            <button class="listing-action" type="button" data-contact="${item.id}" style="margin-top:auto">Contact via WhatsApp</button>
+            <button class="listing-action" type="button" data-contact="${item.id}" style="margin-top:auto">Contact</button>
           </div>
         </article>
       `).join('');
@@ -4152,6 +4293,131 @@
       }
     });
 
+    // ── USERNAME MODAL & PENDING SIGNUP ───────────────────────────────
+    let _pendingSignupPayload = null; // stores data between username modal and finalizeSignup
+
+    function showUsernameModal(payload) {
+      _pendingSignupPayload = payload;
+      document.getElementById('chosen-username').value = '';
+      document.getElementById('username-feedback').style.display = 'none';
+      document.getElementById('usernameOverlay').style.display = 'flex';
+    }
+
+    function validateUsernameInput(input) {
+      // Strip spaces immediately
+      input.value = input.value.replace(/\s/g, '');
+      const fb = document.getElementById('username-feedback');
+      const val = input.value;
+      if (!val) { fb.style.display = 'none'; return; }
+      const valid = /^[a-zA-Z0-9._]{3,}$/.test(val);
+      fb.style.display = 'block';
+      if (valid) {
+        fb.style.background = 'rgba(46,139,120,0.10)';
+        fb.style.color = 'var(--green)';
+        fb.style.border = '1px solid rgba(46,139,120,0.30)';
+        fb.textContent = '✓ Looks good!';
+      } else {
+        fb.style.background = 'rgba(220,50,50,0.08)';
+        fb.style.color = '#c0392b';
+        fb.style.border = '1px solid rgba(220,50,50,0.25)';
+        fb.textContent = val.length < 3 ? 'Too short — at least 3 characters needed.' : 'Only letters, numbers, underscores, and dots allowed.';
+      }
+    }
+
+    async function finalizeSignup() {
+      const username = document.getElementById('chosen-username').value.trim();
+      if (!username) { showToast('Please enter a username.'); return; }
+      if (username.includes(' ')) { showToast('Username cannot contain spaces.'); return; }
+      if (!/^[a-zA-Z0-9._]{3,}$/.test(username)) {
+        showToast('Username can only contain letters, numbers, underscores, and dots. Min 3 characters.');
+        return;
+      }
+      if (!_pendingSignupPayload) { showToast('Something went wrong. Please try again.'); return; }
+
+      const finalBtn = document.querySelector('#usernameOverlay button[onclick="finalizeSignup()"]');
+      if (finalBtn) { finalBtn.disabled = true; finalBtn.textContent = 'Creating account…'; }
+
+      try {
+        const { payload, type } = _pendingSignupPayload;
+        payload.username = username;
+
+        const { user: acc, token } = await apiFetch('/api/auth/signup', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        // Store username locally in account object
+        acc.username = username;
+        saveSession(acc, token);
+        applyAccount(acc);
+
+        document.getElementById('usernameOverlay').style.display = 'none';
+        const savedPayload = _pendingSignupPayload;
+        _pendingSignupPayload = null;
+
+        if (type === 'learner') {
+          document.getElementById('signupFormPanel').style.display = 'none';
+          if (document.getElementById('registrationForm')) document.getElementById('registrationForm').reset();
+          setRole('learner');
+          document.querySelectorAll('.other-detail').forEach(f => f.classList.remove('show'));
+          showToast(`Welcome, ${acc.name}! Your learner account is ready. Your login username is: ${username}`);
+          setPage('home');
+        } else if (type === 'provider') {
+          // post listing
+          const lp = savedPayload.listingPayload;
+          if (lp) {
+            try { await apiFetch('/api/listings', { method: 'POST', body: JSON.stringify(lp) }); } catch { /* non-critical */ }
+          }
+          document.getElementById('signupFormPanel').style.display = 'none';
+          if (document.getElementById('registrationForm')) document.getElementById('registrationForm').reset();
+          renderListings();
+          showToast(`Account created! Your login username is: ${username}`);
+          showProviderThankYou(acc.name);
+        } else if (type === 'learner-provider') {
+          const lp = savedPayload.listingPayload;
+          if (lp) {
+            try { await apiFetch('/api/listings', { method: 'POST', body: JSON.stringify(lp) }); } catch { /* non-critical */ }
+          }
+          document.getElementById('signupFormPanel').style.display = 'none';
+          if (document.getElementById('registrationForm')) document.getElementById('registrationForm').reset();
+          document.getElementById('learnerProviderFields').style.display = 'none';
+          document.querySelectorAll('#learnerTutoringFields,#learnerFitnessFields,#learnerMerchFields').forEach(el => el.classList.remove('show'));
+          document.querySelectorAll('.other-detail').forEach(f => f.classList.remove('show'));
+          renderListings();
+          showToast(`Account ready! Your login username is: ${username}`);
+          setPage('home');
+        }
+      } catch (err) {
+        showToast(err.message || 'Could not create account. Please try again.');
+      } finally {
+        if (finalBtn) { finalBtn.disabled = false; finalBtn.textContent = 'Confirm & Create My Account →'; }
+      }
+    }
+
+    // ── CONTACT THANK-YOU MODAL ────────────────────────────────────────
+    function showContactThankYou() {
+      const existing = document.getElementById('contactThankYouOverlay');
+      if (existing) { existing.style.display = 'flex'; return; }
+      const overlay = document.createElement('div');
+      overlay.id = 'contactThankYouOverlay';
+      overlay.style.cssText = 'display:flex;position:fixed;inset:0;z-index:80;background:rgba(11,13,18,0.72);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px';
+      overlay.innerHTML = `
+        <div style="width:min(460px,100%);border:1px solid rgba(215,180,107,0.30);border-radius:18px;background:var(--panel);box-shadow:0 32px 100px rgba(0,0,0,0.36);overflow:hidden;animation:pageIn 260ms cubic-bezier(.22,1,.36,1) both">
+          <div style="padding:36px 32px;text-align:center">
+            <div style="width:68px;height:68px;border-radius:50%;background:rgba(46,139,120,0.12);border:2px solid rgba(46,139,120,0.38);display:grid;place-items:center;margin:0 auto 20px;color:#2e8b78">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h2 style="margin:0 0 12px;font-family:'Playfair Display',Georgia,serif;font-size:26px;line-height:1.15">Thank you for connecting with us!</h2>
+            <p style="margin:0 0 28px;color:var(--muted);font-size:15px;line-height:1.7">We will be in touch with you very soon.</p>
+            <button onclick="document.getElementById('contactThankYouOverlay').style.display='none'" style="min-height:46px;padding:0 28px;border-radius:10px;background:var(--night);color:#fff;font-size:14px;font-weight:800;border:0;cursor:pointer">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      overlay.addEventListener('click', function(e) { if (e.target === this) this.style.display = 'none'; });
+      document.body.appendChild(overlay);
+    }
+
     // ── LOGIN / SIGNUP FLOW ────────────────────────────────────────────
     function showSignup() {
       document.getElementById('loginPanel').style.display = 'none';
@@ -4163,6 +4429,11 @@
     function showLoginPanel() {
       document.getElementById('loginPanel').style.display = '';
       document.getElementById('signupPanel').style.display = 'none';
+      // Clear fields so previous values don't interfere
+      const loginPhone = document.getElementById('login-phone');
+      const loginPass = document.getElementById('login-password');
+      if (loginPhone) loginPhone.value = '';
+      if (loginPass) loginPass.value = '';
     }
 
     function startSignup(role) {
@@ -4181,26 +4452,23 @@
     }
 
     async function handleLogin() {
-      const user = document.getElementById('login-username').value.trim();
+      const phone = document.getElementById('login-phone').value.trim();
       const pass = document.getElementById('login-password').value.trim();
-      if (!user || !pass) { showToast('Please enter your username and password.'); return; }
+      if (!phone || !pass) { showToast('Please enter your phone number and password.'); return; }
 
       const loginBtn = document.querySelector('#loginPanel .submit-button, #loginPanel button[type=button]');
       if (loginBtn) loginBtn.disabled = true;
 
       try {
-        // Detect if user typed a phone number or a name
-        const isPhone = /^\d{7,}$/.test(user.replace(/\D/g, '')) && user.replace(/\D/g,'').length >= 7;
-        const body = isPhone ? { phone: user, password: pass } : { name: user, password: pass };
         const { user: acc, token } = await apiFetch('/api/auth/login', {
-          method: 'POST', body: JSON.stringify(body)
+          method: 'POST', body: JSON.stringify({ phone: phone, password: pass })
         });
         saveSession(acc, token);
         showToast(`Welcome back, ${acc.name}!`);
         applyAccount(acc);
         setPage('marketplace');
       } catch (err) {
-        showToast(err.message || 'Login failed. Please try again.');
+        showToast(err.message || 'Login failed. Please check your phone number and password.');
       } finally {
         if (loginBtn) loginBtn.disabled = false;
       }
@@ -4231,7 +4499,7 @@
           method: 'POST',
           body: JSON.stringify({ name, college, phone, product })
         });
-      } catch { /* non-critical — still open WhatsApp */ }
+      } catch {  }
 
       const msg = encodeURIComponent(
         'Hi! I want to sell on StudentHub Store.\n\n' +
@@ -4243,7 +4511,7 @@
       );
       window.open('https://wa.me/919876543210?text=' + msg, '_blank');
       closeSellModal();
-      showToast('Details sent! We will reach out on WhatsApp shortly.');
+      showToast('Details sent! We will reach out on Email shortly.');
     }
 
     // Close sell modal on overlay click
@@ -4252,21 +4520,24 @@
     });
 
     // ── PROFILE MODAL ──────────────────────────────────────────────────
-    function openProfileModal() {
+ function openProfileModal() {
       const acc = storedAccount();
       if (!acc) { showToast('No account found. Please sign up first.'); return; }
-      const roleLabel = acc.roleLabel || acc.role_label || acc.role || 'Member';
+      
       // populate view
       document.getElementById('profileAvatarLg').textContent = initialsFromName(acc.name);
       document.getElementById('profileTitle').textContent = acc.name || 'Your Name';
-      document.getElementById('profileRoleBadge').textContent = roleLabel;
+      document.getElementById('profileRoleBadge').textContent = acc.roleLabel || 'Member';
       document.getElementById('pv-name').textContent = acc.name || '—';
       document.getElementById('pv-college').textContent = acc.college || '—';
       document.getElementById('pv-phone').textContent = acc.phone || '—';
-      document.getElementById('pv-role').textContent = roleLabel;
+      document.getElementById('pv-role').textContent = acc.roleLabel || '—';
       document.getElementById('pv-summary').textContent = acc.summary || '';
+      
       // ensure view mode
       switchToViewMode();
+      
+    
       const overlay = document.getElementById('profileOverlay');
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
@@ -4353,8 +4624,15 @@
       $$('[data-account-initials]').forEach(n => { n.textContent = 'SH'; });
       document.getElementById('accountName').textContent = 'StudentHub user';
       document.getElementById('accountRole').textContent = 'Registered account';
+      // Clear login form fields so re-login works cleanly
+      const loginPhone = document.getElementById('login-phone');
+      const loginPass = document.getElementById('login-password');
+      if (loginPhone) loginPhone.value = '';
+      if (loginPass) loginPass.value = '';
       // Restore Join/Create-profile elements after logout
       showJoinElements();
+      // Restore provider-only buttons for logged-out visitors
+      $$('.provider-only-btn').forEach(el => { el.style.display = ''; });
       renderListings();
       setPage('home');
       showToast('You have been logged out.');
@@ -4365,11 +4643,17 @@
       if (e.target === this) closeLogoutConfirm();
     });
 
+    // close las overlay on backdrop click
+    document.getElementById('lasOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeLasModal();
+    });
+
     // close profile/logout on Escape
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeProfileModal();
         closeLogoutConfirm();
+        closeLasModal();
       }
     });
 
